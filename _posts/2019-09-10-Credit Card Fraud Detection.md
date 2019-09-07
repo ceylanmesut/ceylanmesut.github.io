@@ -16,9 +16,8 @@ excerpt: "Machine Learning, Imbalanced Data, Fraud Detection"
 
 python code block
 
-''' python
+``` python
     import numpy as np
-    
-'''
+```
 
 Image

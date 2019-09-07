@@ -1,10 +1,10 @@
 ---
 layout: archive
 permalink: /machine-learning/
-title: "Machine Learning Posts"
+title: "Machine Learning Posts by Tags"
 author_profile: true
 header:
-    image: "/images/cover_photo.jpg"
+ image: "/images/cover_photo.jpg"
 
 
 {% include group-by-array collection=site.posts field="tags" %}

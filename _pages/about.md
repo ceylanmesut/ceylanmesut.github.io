@@ -6,4 +6,4 @@ header:
   image: "/images/cover_photo.jpg"
 ---
 
-I'm data scientist."	
+I'm data scientist.	

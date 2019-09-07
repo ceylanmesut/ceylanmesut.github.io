@@ -3,7 +3,7 @@
 title: "About"
 permalink: /about/
 header:
-  image: "/images/ds.png"
+  image: "/images/cover_photo.jpg"
 ---
 
 I'm data scientist."	

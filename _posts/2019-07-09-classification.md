@@ -1,9 +1,9 @@
 ---
-title: "Credit Card Fraud Detection Project"
+title: "Fraud"
 date: 2019-09-10
-tages: [machine learning, imbalanced data]
+tages: [ml, imbalanced data]
 header:
  image: "/images/cover_photo.jpg"
-excerpt: "Machine Learning"
+excerpt: "MACHINE"
 
 ---

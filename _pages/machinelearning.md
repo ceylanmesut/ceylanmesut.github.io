@@ -6,3 +6,4 @@ author_profile: true
 header:
  image: "/images/cover_photo.jpg"
 
+---

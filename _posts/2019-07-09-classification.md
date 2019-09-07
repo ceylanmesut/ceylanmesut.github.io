@@ -4,20 +4,6 @@ date: 2019-09-10
 tages: [machine learning, imbalanced data]
 header:
  image: "/images/cover_photo.jpg"
-excerpt: "Machine Learning, Imbalanced Data, Fraud Detection"
+excerpt: "Machine Learning"
 
-# H1 Heading
-
-## H2 Heading
-
-### H3 Headings
-
-*italics* 
-
-python code block
-
-``` python
-    import numpy as np
-```
-
-Image
+---

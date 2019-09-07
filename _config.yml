@@ -108,7 +108,7 @@ analytics:
 # Site Author
 author:
   name             : "Mesut Ceylan"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/images/profil_photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Data Scientist"
   location         : "Zurich | Switzerland"
   email            :
@@ -119,12 +119,12 @@ author:
     - label: "Linkedin"
       icon: "fas fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/mesutceylan/"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
-      url: "https://facebook.com/"
+    #- label: "Twitter"
+     # icon: "fab fa-fw fa-twitter-square"
+     # url: "https://twitter.com/"
+    #- label: "Facebook"
+     # icon: "fab fa-fw fa-facebook-square"
+     # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/ceylanmesut"

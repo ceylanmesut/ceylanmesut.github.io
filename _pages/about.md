@@ -5,6 +5,7 @@ header:
   image: "/images/cover_photo.jpg"
 ---
 
-Hi HELLO. I'm Mesut Ceylan and I'm a data scientist.
+Hi there! I'm Mesut Ceylan and I'm a data scientist.
+
 This website includes some of my projects on machine learning and data science.
 Please do not hesitate me for further questions and comments.

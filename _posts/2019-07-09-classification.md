@@ -31,4 +31,4 @@ excerpt: "Credit card fraud detection machine learning project."
 ## Results
 * **Probabilistic Models**:  Logistic Regression and Gaussian Naive Bayes.
 
-<img src="{{ site.url }}{{ site.baseurl }}/assets/images/fraud_results.png" alt="" class="full">
+<img src="{{ site.url }}{{ site.baseurl }}/images/fraud_results.png" alt="Classification Results"

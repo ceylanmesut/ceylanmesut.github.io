@@ -3,7 +3,7 @@ title: "Fraud Detection"
 date: 2019-09-10
 tags: [Machine Learning, Data Science]
 header:
- image: "/images/credit_cards.png"
+ image: "/images/credit_cards.jpg"
 excerpt: "Credit card fraud detection machine learning project."
 
 ---

@@ -1,26 +1,17 @@
 ---
-title: "Fraud Detection"
+title: "Credit Card Fraud Detection"
 date: 2019-09-10
 tags: [Machine Learning, Data Science]
 header:
  image: "/images/credit_cards.jpg"
 excerpt: "Credit card fraud detection machine learning project."
 
----
-# Machine Learning Project: Credit Card Fraud Detection
-Machine Learning Project on Python for Fraud Detection
-
-
-
- 
+--- 
 * **Dataset**: Kaggle dataset that anonymized credit card transactions labeled as fraudulent or genuine- Machine Learning Group - ULB
-
 
 * **Inspiration**: Identifying fraudulent credit card transactions.
 
-
 * **Problem Definition**: Building binary classification models to classify fraud transactions,thus obtain high AUC and F1 score.
-
 
 * **Link**: https://www.kaggle.com/mlg-ulb/creditcardfraud
 
@@ -39,3 +30,5 @@ Machine Learning Project on Python for Fraud Detection
 
 ## Results
 * **Probabilistic Models**:  Logistic Regression and Gaussian Naive Bayes.
+
+<img src="{{ site.url }}{{ site.baseurl }}/assets/images/fraud_results.png" alt="" class="full">

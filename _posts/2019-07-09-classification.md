@@ -6,14 +6,23 @@ header:
  image: "/images/credit_cards.jpg"
 excerpt: "Credit card fraud detection machine learning project."
 
---- 
+---
+# Project: Credit Card Fraud Detection
+
 * **Dataset**: Kaggle dataset that anonymized credit card transactions labeled as fraudulent or genuine- Machine Learning Group - ULB
+
 
 * **Inspiration**: Identifying fraudulent credit card transactions.
 
+
 * **Problem Definition**: Building binary classification models to classify fraud transactions,thus obtain high AUC and F1 score.
 
-* **Link**: link:https://www.kaggle.com/mlg-ulb/creditcardfraud
+
+* **Link**: https://www.kaggle.com/mlg-ulb/creditcardfraud
+
+#####  Mesut Ceylan - Date
+
+
 
 ## Approach:
 * **0.Explanatory Data Analysis**: Understanding the dataset and generating deeper insight.
@@ -28,11 +37,6 @@ excerpt: "Credit card fraud detection machine learning project."
 * **Probabilistic Models**:  Logistic Regression and Gaussian Naive Bayes.
 * **Non-Probabilistic Models**: Linear Support Vector Machine and Kernelized Support Vector Machine (Polynomial Kernel)
 
-## Results
-* **Probabilistic Models**:  Logistic Regression and Gaussian Naive Bayes.
-
-
-
 
 ```python
 # Necessary packages.
@@ -44,7 +48,7 @@ from sklearn.metrics import roc_curve
 from sklearn.metrics import confusion_matrix
 from sklearn.utils.multiclass import unique_labels
 from sklearn.linear_model import LogisticRegression
-from collections import Counter 
+from collections import Counter
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
@@ -79,9 +83,14 @@ data.shape
 
 
 
-Apparently we have 284807 observations and 30 features.
+Apparently we have 284.807 observations and 30 features along with class labels consisting of 1s and 0s.
 
 ## 0.Explanatory Data Analysis
+
+```python
+# Printing data
+data.head()
+
 
 
 ```python
@@ -89,46 +98,7 @@ Apparently we have 284807 observations and 30 features.
 data.dtypes
 ```
 
-
-
-
-    Time      float64
-    V1        float64
-    V2        float64
-    V3        float64
-    V4        float64
-    V5        float64
-    V6        float64
-    V7        float64
-    V8        float64
-    V9        float64
-    V10       float64
-    V11       float64
-    V12       float64
-    V13       float64
-    V14       float64
-    V15       float64
-    V16       float64
-    V17       float64
-    V18       float64
-    V19       float64
-    V20       float64
-    V21       float64
-    V22       float64
-    V23       float64
-    V24       float64
-    V25       float64
-    V26       float64
-    V27       float64
-    V28       float64
-    Amount    float64
-    Class       int64
-    dtype: object
-
-
-
-Dataset consists of floats.
-
+All of the feature data type is float. Therefore, no need to standardize data types.
 
 ```python
 # Checking for missing data.
@@ -142,7 +112,7 @@ data.isnull().values.any()
 
 
 
-So, there is no null value in dataset.
+So, there is no null value in dataset. Therefore, there is no need to pre-process missing observation.
 
 
 ```python
@@ -153,11 +123,12 @@ print("Number of fraduelent transaction:",data.loc[data.Class == 1, 'Class'].cou
 
     Number of non-fraduelent transaction: 284315
     Number of fraduelent transaction: 492
-    
-
-Class imbalanced is identified in the dataset.
 
 
+Class imbalanced is evident in dataset. As expected, fraud transactions are way lower than non-fraduelent transactions.
+Therefore, our project problem is to combat class imbalance on binary classification settings, thus predicting particular transaction fraud or non-fraud.
+
+Let's drop time feature from dataset and check distributions of all features to get better idea about dataset.
 ```python
 # Dropping the time column from dataset.
 data_wo_time=data.iloc[:,1:]
@@ -173,17 +144,18 @@ for i, column in enumerate(columns):
     ax=fig.add_subplot(5,6,i+1)
     data_wo_time.hist(column=column, bins=75, ax=ax,color = "darkblue", ec='white', grid=False)
     ax.set_title(column+" Distribution")
-    
+
 plt.show()
-    
+
 ```
 
+<img src="{{ site.url }}{{ site.baseurl }}/assets/images/output_12_0.png.png" alt="">
 
 ![png](output_12_0.png)
 
 
 * As Principal Component Analysis is applied for dimensionality reduction, all features but Amount, Time and Class is Gaussian distributed.
-* Amount, Time and Class features require individual analysis
+* Amount, Time and Class features require individual analysis so that we can get deeper insights out of the data.
 
 
 ```python
@@ -4447,13 +4419,13 @@ y2["Class"] = y2.Class.astype(int)
 
 ```
 
-    C:\Users\mesut\.conda\envs\tensor-flow-gpu\lib\site-packages\ipykernel_launcher.py:8: SettingWithCopyWarning: 
+    C:\Users\mesut\.conda\envs\tensor-flow-gpu\lib\site-packages\ipykernel_launcher.py:8: SettingWithCopyWarning:
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
-    
+
     See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-      
-    
+
+
 
 
 ```python
@@ -4461,7 +4433,7 @@ print("Hello World")
 ```
 
     Hello World
-    
+
 
 
 ```python
@@ -4469,16 +4441,16 @@ print("Hello World")
 # prediction for each model and plot all performance metrics.
 
 def predictor(models, x, y):
-    """This fuction accepts model list, features and labels along with model parameters and computes cross val predict 
+    """This fuction accepts model list, features and labels along with model parameters and computes cross val predict
     score with 5 fold CV and plots every performance metric score, confusion matrices of model and ROC Curves."""
-     
+
     # Obtaining titles of the ML models defined by user.
     model_titles=[]
     for m in models:
-    
+
         r=m['label']
         model_titles.append(r)
-           
+
     # Computing predictions of the model.
     predictions=[]
     for m in models:
@@ -4486,27 +4458,27 @@ def predictor(models, x, y):
         model = m['model'] # select the model
         y_predicted=cross_val_predict(model, x, y.values.ravel(), cv=5) #Computing predicted labels.    
         predictions.append(y_predicted) # adding predictions to list predictions.
-    
+
     # Defining evaluation metrics.
     eva_metrics=[recall_score,precision_score,f1_score,accuracy_score]
     eva_metric_titles=["Recall Score","Precision Score","F1 Score","Accuracy Score"]   
-            
+
     # Plotting all the performance metrics as bar chart.
     fig = plt.figure(figsize=(10,4))
     fig.suptitle("Performance Metrics", fontsize=14, x=0.6, y=1.05)
-    labels=np.unique(y) 
+    labels=np.unique(y)
     i=1
     for measure, metric_title in zip(eva_metrics, eva_metric_titles):
 
         plt.subplot(2,2,i,frameon=True)
         plt.title(metric_title)
-        
+
         xa=np.arange(len(model_titles))
         ya=[]
- 
+
         for c in range(len(predictions)):
             ya.append(measure(y,predictions[c]))
-            
+
         plt.barh(xa,ya, color='tab:blue', edgecolor=None)
         plt.yticks(xa, model_titles)
         plt.xticks([])
@@ -4515,13 +4487,13 @@ def predictor(models, x, y):
         i += 1  
         u=0
         for c in range(len(predictions)):
-            
-            model=("{0:.2f}".format(measure(y, predictions[c]))) 
+
+            model=("{0:.2f}".format(measure(y, predictions[c])))
             plt.text(0.35,(0.0+float(u)),s=model,fontsize=11,color="black")
             u +=1      
         plt.tight_layout()
     plt.show()  
-    
+
     # Plotting Confusion Matrices.
     # Depending on amount of model, size of the figure changes for better illustration.
     if len(models) == 1:
@@ -4530,43 +4502,43 @@ def predictor(models, x, y):
         fig2 = plt.figure(figsize=(9,4),edgecolor="b",frameon=True) #if there are two graphs
     elif len(models) >2:
         fig2 = plt.figure(figsize=(12,3),edgecolor="b",frameon=True)#if there are more than two graphs.
-    
-    fig2.suptitle("Confusion Matrices", fontsize=14, x=0.47, y=1.05) # 
-        
+
+    fig2.suptitle("Confusion Matrices", fontsize=14, x=0.47, y=1.05) #
+
     f=1
-        
+
     for k, h in zip(predictions, model_titles):
-        
-        if len(models) < 4: 
+
+        if len(models) < 4:
             plt.subplot(1,len(models),f,frameon=True)
         else:
             plt.subplot(2,len(models),f,frameon=True)
-                
+
         plt.title(h)
         frame={'y':y.values.ravel(),'y_predicted':k}
         df = pd.DataFrame(frame, columns=['y','y_predicted'])
-        confusion_matrix = pd.crosstab(df['y'], df['y_predicted'], 
+        confusion_matrix = pd.crosstab(df['y'], df['y_predicted'],
                                        rownames=['True Label'], colnames=['Predicted Label'], margins = False)
 
         sns.heatmap(confusion_matrix,annot=True,fmt="d",cmap="Blues",linecolor="blue",
                     vmin=0,vmax=500)
         fig2.tight_layout()
         f +=1
-        
+
     #Plotting ROC Curve and computing AUC Score.    
     fig3 = plt.figure(figsize=(12,6),edgecolor="b",frameon=True)    
     for m in models:
-        
+
         model = m['model'] # select the model
         y_predicted=cross_val_predict(model, x, y.values.ravel(), cv=5) #Computing predicted labels.
-    
+
         # Computing FPR and TPR
         fpr, tpr, thresholds = roc_curve(y, y_predicted)
         # Computing AUC Score.
         auc = roc_auc_score(y,y_predicted)
         # Plotting the AUC Score.
         plt.plot(fpr, tpr, label='%s ROC: %0.3f' % (m['label'], auc))
-        # Custom settings for the plot 
+        # Custom settings for the plot
         plt.plot([0, 1], [0, 1],'k--')
         plt.xlim([-0.01, 1.0])
         plt.ylim([0, 1.05])
@@ -4583,7 +4555,7 @@ def predictor(models, x, y):
 
 clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=1.0, kernel='linear',gamma='auto_deprecated')}]#,
      #{'label':'Kernelized SVM', 'model':svm.SVC(C=10.0, kernel='poly', degree=2,gamma='auto_deprecated')},
-     #{'label':'Logistic Regression','model':LogisticRegression(C=10, max_iter=1000,penalty= 'l2', 
+     #{'label':'Logistic Regression','model':LogisticRegression(C=10, max_iter=1000,penalty= 'l2',
      #                                                          solver= 'lbfgs')},
      #{'label':'Gaussian Naive Bayes','model':GaussianNB()}]
 
@@ -4614,7 +4586,7 @@ predictor(clfs, x=x2, y=y2)
 
 
 ```python
-clfs=[{'label':'Logistic Regression','model':LogisticRegression(C=10, max_iter=1000, 
+clfs=[{'label':'Logistic Regression','model':LogisticRegression(C=10, max_iter=1000,
                                                                 penalty= 'l2', solver= 'lbfgs')}]
 
 predictor(clfs, x=x2, y=y2)
@@ -4661,7 +4633,7 @@ clfs=[{'label':'Logistic Regression','model':LogisticRegression()}]
 
 hyperparameters=[{'penalty': ['l2'],"max_iter":[1000],'solver':['lbfgs'],
                 'C':[0.001,0.005,0.01,0.03,0.05,0.07,0.09,0.1,0.3,0.5,0.7,0.9,2.0,5.0,10.0]}]
-               
+
 
 grid_search_plotter(models=clfs,grid_search_values=hyperparameters,x=x2,y=y2)
 ```
@@ -4669,7 +4641,7 @@ grid_search_plotter(models=clfs,grid_search_values=hyperparameters,x=x2,y=y2)
     Best Parameters Choosen
     -----------------------
     Best Parameters:Logistic Regression {'C': 0.03, 'max_iter': 1000, 'penalty': 'l2', 'solver': 'lbfgs'}
-    
+
 
 
 ![png](output_34_1.png)
@@ -4754,7 +4726,7 @@ predictor(clfs, x=x2, y=y2)
 
 ###  2.2 Undersampling
 
-Undersampling is one of the method that can be used for dealing with class imbalance. Undersampling appraoch as follows: non-fraud observations (minority class) should be undersampled  to be able to create balanced dataset. 
+Undersampling is one of the method that can be used for dealing with class imbalance. Undersampling appraoch as follows: non-fraud observations (minority class) should be undersampled  to be able to create balanced dataset.
 
 With undersampling approach, I am able to compute correlation matrix for more precise relationship between features and class labels. Completely balanced dataset would have 492 fraud and 492 non-fraud transaction records.
 
@@ -4787,7 +4759,7 @@ print("Number of fraduelent transaction:",subsampled_data.loc[data.Class == 1, '
 
     Number of non-fraduelent transaction: 492
     Number of fraduelent transaction: 492
-    
+
 
 
 ```python
@@ -8808,31 +8780,31 @@ Now, I need to choose threshold for determining which observation is outlier. As
 
 def outlier_detector(data,feature_name, sd_value):
     """This function detects outliers of dataset in the structure of pandas dataframe
-    and finally removes them and then prints how many outlier detected 
+    and finally removes them and then prints how many outlier detected
     under the assumption of Gaussian distributed feautures."""
-    
+
     # Mean and standart deviation calculation.
     mean=data[feature_name].mean()
     standart_dev=data[feature_name].std()
     print("Feature:%s" %feature_name, "Mean:%.3f"% mean, "Standart Deviation:%.3f" % standart_dev)
-    
+
     # Threshold settings.
     threshold= standart_dev * sd_value
     lower, upper = mean - threshold, mean + threshold
     outlier = [value for value in data[feature_name]if value <lower or value > upper]
-    
+
     #Removing outliers that does not fall into sd interval of distribution.
-    data=data.drop(data[(data[feature_name] < lower) | 
+    data=data.drop(data[(data[feature_name] < lower) |
                                          (data[feature_name] > upper)].index)
-    
+
     print('Identified outliers: %d' % len(outlier))
     print(len(data))
-    
+
     return data
 ```
 
 * One can adjust the sd value for outlier removal and model comparison section. Currently, I move forward with SD=3
-* I'm going to check how many observation lay out of the **SD value 3** that accout for **99.7% of the whole data.** 
+* I'm going to check how many observation lay out of the **SD value 3** that accout for **99.7% of the whole data.**
 * To check, SD observation coverage approach: 68-95-99 rule: https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule
 
 
@@ -8854,7 +8826,7 @@ for values in features:
     Feature:V14 Mean:-3.264 Standart Deviation:4.427
     Identified outliers: 2
     951
-    
+
 
 ### Visualizing Undersampled Dataset via Principal Component Analysis
 
@@ -8870,13 +8842,13 @@ y["Class"] = y.Class.astype(int)
 
 ```
 
-    C:\Users\mesut\.conda\envs\tensor-flow-gpu\lib\site-packages\ipykernel_launcher.py:6: SettingWithCopyWarning: 
+    C:\Users\mesut\.conda\envs\tensor-flow-gpu\lib\site-packages\ipykernel_launcher.py:6: SettingWithCopyWarning:
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
-    
+
     See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-      
-    
+
+
 
 
 ```python
@@ -8906,7 +8878,7 @@ plt.figure(figsize=((8,6)))
 plt.title('Principal Component Analysis', fontsize=14)
 plt.xlabel('1st Principal Component', fontsize=12)
 plt.ylabel('2st Principal Componen',fontsize=12)
-            
+
 plt.scatter(fraud.iloc[:,0], fraud.iloc[:,1], label="Fraud"
             ,s=7,alpha=0.9,edgecolors=None)
 plt.scatter(non_fraud.iloc[:,0], non_fraud.iloc[:,1], label="Non-Fraud"
@@ -8954,26 +8926,26 @@ predictor(models, x=x, y=y)
 
 
 ```python
-# Defining GridsearchCV Function for hyperparameter tunning. 
+# Defining GridsearchCV Function for hyperparameter tunning.
 
 def grid_search_plotter(models,grid_search_values,x,y):
     """This function computes GridSearchCV values of the models and finds the best model parameters. Finally it plots
     model performance metrics."""
-    
+
     # Obtaining titles of the ML models defined by user.
     model_titles=[]
     for m in models:
-    
+
         r=m['label']
         model_titles.append(r)
-    
+
     # Computing gridsearchcv predictions.
     grid_cv_predictions=[]
 
     print("Best Parameters Choosen")
     print("-----------------------")
     for m, grid_values in zip(models, grid_search_values):# modeli ve grid degerlerini kullanıcı saglayacak.
-        
+
         model = m['model'] # select the model
         grid_clf=GridSearchCV(model, param_grid=grid_values,scoring='recall', cv=5)
         grid_clf.fit(x, y.values.ravel())
@@ -8987,21 +8959,21 @@ def grid_search_plotter(models,grid_search_values,x,y):
 
     eva_metrics=[recall_score,precision_score,f1_score,accuracy_score]
     eva_metric_titles=["Recall Score","Precision Score","F1 Score","Accuracy Score"]   
-            
+
     # Plotting all the performance metrics as bar chart.
     fig = plt.figure(figsize=(10,4))
     fig.suptitle("Performance Metrics", fontsize=14, x=0.6, y=1.05)
-    labels=np.unique(y) 
+    labels=np.unique(y)
     i=1
-    
+
     for measure, metric_title in zip(eva_metrics, eva_metric_titles):
 
         plt.subplot(2,2,i,frameon=True)
         plt.title(metric_title)
-        
+
         xa=np.arange(len(model_titles))
         ya=[]
-        
+
         for c in range(len(grid_cv_predictions)):
             ya.append(measure(y,grid_cv_predictions[c]))
 
@@ -9010,39 +8982,39 @@ def grid_search_plotter(models,grid_search_values,x,y):
         plt.xticks([])
         plt.tick_params(axis='both', which='major', labelsize=11)
         i += 1
-        
+
         u=-0.1
         for c in range(len(grid_cv_predictions)):
-            
-            model=("{0:.2f}".format(measure(y, grid_cv_predictions[c]))) 
+
+            model=("{0:.2f}".format(measure(y, grid_cv_predictions[c])))
             plt.text(0.35,(0.0+float(u)),s=model,fontsize=11,color="white")
             u +=1.0      
 
         plt.tight_layout()
     plt.show()   
-    
+
     if len(models) == 1:
         fig2 = plt.figure(figsize=(6,4),edgecolor="b",frameon=True) #if there is only one graph
     elif len(models)==2:
         fig2 = plt.figure(figsize=(9,4),edgecolor="b",frameon=True) #if there are two graphs
     elif len(models) >2:
         fig2 = plt.figure(figsize=(12,3),edgecolor="b",frameon=True)#if there are more than two graphs.
-    
-    fig2.suptitle("Confusion Matrices", fontsize=14, x=0.47, y=1.05) 
 
-        
+    fig2.suptitle("Confusion Matrices", fontsize=14, x=0.47, y=1.05)
+
+
     f=1
     for k, h in zip(grid_cv_predictions, model_titles):
-        
-        if len(models) < 4: 
+
+        if len(models) < 4:
             plt.subplot(1,len(models),f,frameon=True)
         else:
             plt.subplot(2,len(models),f,frameon=True)
-        
+
         plt.title(h)
         frame={'y':y.values.ravel(),'y_predicted':k}
         df = pd.DataFrame(frame, columns=['y','y_predicted'])
-        confusion_matrix = pd.crosstab(df['y'], df['y_predicted'], 
+        confusion_matrix = pd.crosstab(df['y'], df['y_predicted'],
                                        rownames=['True Label'], colnames=['Predicted Label'], margins = False)
 
         sns.heatmap(confusion_matrix,annot=True,fmt="d",cmap="Blues",linecolor="blue",
@@ -9052,16 +9024,16 @@ def grid_search_plotter(models,grid_search_values,x,y):
         f +=1
 
     fig3 = plt.figure(figsize=(12,6),edgecolor="b",frameon=True)
-    
+
     for v, m in zip(grid_cv_predictions, models):
-        
+
         # Computing FPR and TPR
         fpr, tpr, thresholds = roc_curve(y.values.ravel(), v)
         # Computing AUC Score.
         auc = roc_auc_score(y.values.ravel(),v)
         # Plotting the AUC Score.
         plt.plot(fpr, tpr, label='%s ROC: %0.3f' % (m['label'], auc))
-        # Custom settings for the plot 
+        # Custom settings for the plot
         plt.plot([0, 1], [0, 1],'k--')
         plt.xlim([-0.01, 1.0])
         plt.ylim([0.0, 1.05])
@@ -9069,7 +9041,7 @@ def grid_search_plotter(models,grid_search_values,x,y):
         plt.ylabel('Sensitivity(True Positive Rate)', fontsize=14)
         plt.title('ROC Curve', fontsize=18)
         plt.legend(loc="lower right",fontsize=11)
-        
+
     plt.show()
 ```
 
@@ -9099,7 +9071,7 @@ grid_search_plotter(models=clfs,grid_search_values=hyperparameters,x=x,y=y)
     Best Parameters:Kernelized SVM {'C': 5.0, 'degree': 3, 'gamma': 'auto_deprecated', 'kernel': 'poly'}
     Best Parameters:Logistic Regression {'C': 0.05, 'max_iter': 1000, 'penalty': 'l2', 'solver': 'lbfgs'}
     Best Parameters:Gaussian Naive Bayes {'var_smoothing': 1e-13}
-    
+
 
 
 ![png](output_57_1.png)
@@ -9121,9 +9093,3 @@ As further development of the project, one can use Artificial Neural Network on 
 ```python
 
 ```
-
-
-
-
-
-

@@ -90,7 +90,7 @@ Apparently we have 284.807 observations and 30 features along with class labels 
 ```python
 # Printing data
 data.head()
-
+```
 
 
 ```python
@@ -149,7 +149,7 @@ plt.show()
 
 ```
 
-<img src="{{ site.url }}{{ site.baseurl }}/assets/images/output_12_0.png.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/assets/images/output_12_0.png.png" alt="">
 
 ![png](output_12_0.png)
 

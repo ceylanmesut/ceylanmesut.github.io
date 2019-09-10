@@ -7,7 +7,7 @@ header:
 excerpt: "Credit card fraud detection machine learning project."
 
 ---
-# Introduction
+## Introduction
 * **Dataset**: Kaggle dataset that anonymized credit card transactions labeled as fraudulent or genuine- Machine Learning Group - ULB
 
 
@@ -145,7 +145,7 @@ plt.show()
 
 ```
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/assets/images/output_12_0.png.png" alt="">
+<img src="{{ site.url }}{{ site.baseurl }}/images/output_12_0.png" alt="">
 
 ![png](output_12_0.png)
 

@@ -6,6 +6,9 @@ header:
  image: "/images/credit_cards.jpg"
 excerpt: "Credit card fraud detection machine learning project."
 
+toc: true
+toc_label: "My Table of Contents"
+toc_icon: "cog"
 ---
 ## Introduction
 * **Dataset**: Kaggle dataset that anonymized credit card transactions labeled as fraudulent or genuine- Machine Learning Group - ULB

@@ -7,66 +7,44 @@ header:
 excerpt: "Credit card fraud detection machine learning project."
 
 toc: true
-toc_label: "On This Page"
+toc_label: " On This Page"
 toc_icon: "file-alt"
 toc_sticky: true
 ---
 ## Introduction
-* **Dataset**: Kaggle dataset that anonymized credit card transactions labeled as fraudulent or genuine- Machine Learning Group - ULB
+Fundamental challenge of this machine learning project is to create a machine learning model that able to **predict fraudulent credit card transactions** from non-fraduelent ones. From machine learning perspective, fraud transactions are labeled as 1s and non-fraud transactions are labeled as 0s. Therefore, it is **binary classification problem.**
+
+In this project, I'm going to benefit from fundamental classification models from two different categories: probabilistic and non-probabilistic machine learning models. First, I conduct **explanatory data analysis** to better understand data and make decision about my steps. Secondly, I use **four different models on imbalanced dataset** and observe model results. Lastly, I introduce methods for **fight with class imbalance and optimizing the models** for maximum model outcome.
+
+* **Dataset**: Kaggle dataset that anonymized credit card transactions labeled as fraudulent or genuine
 
 
 * **Inspiration**: Identifying fraudulent credit card transactions.
 
 
-* **Problem Definition**: Building binary classification models to classify fraud transactions,thus obtain high AUC and F1 score.
+* **Problem Definition**: Building binary classification models to classify fraud transactions to obtain high AUC and F1 score.
 
 
 * **Link**: https://www.kaggle.com/mlg-ulb/creditcardfraud
 
 
-## Approach:
+## Approach
 * **0.Explanatory Data Analysis**: Understanding the dataset and generating deeper insight.
 
 
-* **1.Models Againts Imbalanced Dataset**: Analyzing model behaviors againts class imbalance.
+* **1.Models Againts Imbalanced Dataset**: Analyzing model behaviors against class imbalance.
 
 
-* **2. Combat with Imbalanced Dataset**: Combating with imbalanced dataset with undersampling and cost sensetive loss function methods.
+* **2. Combat with Imbalanced Dataset**: Combating with imbalanced dataset with under-sampling and cost sensitive loss function methods.
 
-## Models:
+## Models
 * **Probabilistic Models**:  Logistic Regression and Gaussian Naive Bayes.
 * **Non-Probabilistic Models**: Linear Support Vector Machine and Kernelized Support Vector Machine (Polynomial Kernel)
 
 
 ```python
-# Necessary packages.
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.preprocessing import RobustScaler
-from sklearn.metrics import roc_curve
-from sklearn.metrics import confusion_matrix
-from sklearn.utils.multiclass import unique_labels
-from sklearn.linear_model import LogisticRegression
-from collections import Counter
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
-from sklearn import metrics
-from sklearn.metrics import recall_score, precision_score, f1_score, accuracy_score,roc_auc_score
-from sklearn import svm
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import cross_val_score, cross_val_predict
-from warnings import simplefilter
-from sklearn.metrics import recall_score, precision_score, f1_score, accuracy_score,roc_auc_score
-from sklearn import svm
-from sklearn.naive_bayes import GaussianNB
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import cross_val_score, cross_val_predict
-import seaborn as sns
-from sklearn.decomposition import PCA
-
-# ignore all future warnings
-simplefilter(action='ignore', category=FutureWarning)
+# Importing necessary packages. I collect all needed packages to simply the code in the post. Function can be found in github page of project.
+import_packages()
 ```
 
 
@@ -92,6 +70,173 @@ Apparently we have 284.807 observations and 30 features along with class labels 
 data.head()
 ```
 
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Time</th>
+      <th>V1</th>
+      <th>V2</th>
+      <th>V3</th>
+      <th>V4</th>
+      <th>V5</th>
+      <th>V6</th>
+      <th>V7</th>
+      <th>V8</th>
+      <th>V9</th>
+      <th>...</th>
+      <th>V21</th>
+      <th>V22</th>
+      <th>V23</th>
+      <th>V24</th>
+      <th>V25</th>
+      <th>V26</th>
+      <th>V27</th>
+      <th>V28</th>
+      <th>Amount</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>-1.359807</td>
+      <td>-0.072781</td>
+      <td>2.536347</td>
+      <td>1.378155</td>
+      <td>-0.338321</td>
+      <td>0.462388</td>
+      <td>0.239599</td>
+      <td>0.098698</td>
+      <td>0.363787</td>
+      <td>...</td>
+      <td>-0.018307</td>
+      <td>0.277838</td>
+      <td>-0.110474</td>
+      <td>0.066928</td>
+      <td>0.128539</td>
+      <td>-0.189115</td>
+      <td>0.133558</td>
+      <td>-0.021053</td>
+      <td>149.62</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>1.191857</td>
+      <td>0.266151</td>
+      <td>0.166480</td>
+      <td>0.448154</td>
+      <td>0.060018</td>
+      <td>-0.082361</td>
+      <td>-0.078803</td>
+      <td>0.085102</td>
+      <td>-0.255425</td>
+      <td>...</td>
+      <td>-0.225775</td>
+      <td>-0.638672</td>
+      <td>0.101288</td>
+      <td>-0.339846</td>
+      <td>0.167170</td>
+      <td>0.125895</td>
+      <td>-0.008983</td>
+      <td>0.014724</td>
+      <td>2.69</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>-1.358354</td>
+      <td>-1.340163</td>
+      <td>1.773209</td>
+      <td>0.379780</td>
+      <td>-0.503198</td>
+      <td>1.800499</td>
+      <td>0.791461</td>
+      <td>0.247676</td>
+      <td>-1.514654</td>
+      <td>...</td>
+      <td>0.247998</td>
+      <td>0.771679</td>
+      <td>0.909412</td>
+      <td>-0.689281</td>
+      <td>-0.327642</td>
+      <td>-0.139097</td>
+      <td>-0.055353</td>
+      <td>-0.059752</td>
+      <td>378.66</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>-0.966272</td>
+      <td>-0.185226</td>
+      <td>1.792993</td>
+      <td>-0.863291</td>
+      <td>-0.010309</td>
+      <td>1.247203</td>
+      <td>0.237609</td>
+      <td>0.377436</td>
+      <td>-1.387024</td>
+      <td>...</td>
+      <td>-0.108300</td>
+      <td>0.005274</td>
+      <td>-0.190321</td>
+      <td>-1.175575</td>
+      <td>0.647376</td>
+      <td>-0.221929</td>
+      <td>0.062723</td>
+      <td>0.061458</td>
+      <td>123.50</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.0</td>
+      <td>-1.158233</td>
+      <td>0.877737</td>
+      <td>1.548718</td>
+      <td>0.403034</td>
+      <td>-0.407193</td>
+      <td>0.095921</td>
+      <td>0.592941</td>
+      <td>-0.270533</td>
+      <td>0.817739</td>
+      <td>...</td>
+      <td>-0.009431</td>
+      <td>0.798278</td>
+      <td>-0.137458</td>
+      <td>0.141267</td>
+      <td>-0.206010</td>
+      <td>0.502292</td>
+      <td>0.219422</td>
+      <td>0.215153</td>
+      <td>69.99</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 31 columns</p>
+</div>
 
 ```python
 # Cheking data types
@@ -175,6 +320,7 @@ plt.title("Distribution of Time of Non-Fraud Transantion")
     <a href="images/output_15_2.png"><img src="/images/output_15_2.png"></a>
 </figure>
 
+One can observed that effect of day pattern on amount of transactions. Both fraud and **non-fraud transactions decrease** in the night time.
 
 ```python
 # Analysis of Amount on Fraud and Non-Fraud Transactions
@@ -216,7 +362,7 @@ plt.title("Distribution of Amount of Non-Fraud Transantion in $")
 
 
 
-Fraud transactions do not follow certain distribution but distribution of non-fraud transactions has positive skewness. Also one can observed that effect of day pattern on amount of transactions. Both fraud and non-fraud transactions decrease in the night time.
+Fraud transactions do not follow certain distribution but distribution of **non-fraud transactions has positive skewness.**
 
 
 
@@ -408,11 +554,10 @@ data.head()
     </tr>
   </tbody>
 </table>
-<p>5 rows × 31 columns</p>
 </div>
 
 
-
+I also would like to plot correlation matrix to understand relationship between features.
 
 ```python
 # Plotting correlation matrix to identify which features are more correlated.
@@ -4367,250 +4512,65 @@ corr.style.background_gradient(cmap='coolwarm',axis=None).set_precision(2)
 
 
 
-* V4, V11, V2 are the features that highly correlated with class labels.
-* V17, V14 and V12 are the features that least correlated with class labels.
+* V4, V11, V2 are the features that highly correlated with class labels. (High positive correlation)
+* However, V17, V14 and V12 are the features that least correlated with class labels. (High negative correlation)
 
-## 1. Models Againts Imbalanced Dataset
+## 1. Models vs. Imbalanced Dataset
 
-I continue project with testing the models on imbalanced dataset to observe how they behave against class imbalance.
+I continue project with testing the four different models on imbalanced dataset to observe how they behave against class imbalance.
 
 
 ```python
-# Testing classifiers on imbalanced dataset.
-
 # Separating features and class
 x2=data.iloc[:,0:30]
 
 # Separating target
 y2=data.iloc[:, 30:31]
 y2["Class"] = y2.Class.astype(int)
-
 ```
 
+For this project, I defined a function called **predictor** that computes predictions for each model,  plots all four performance metrics along with confusion matrix and also finally draws Receiver Operating Characteristics (ROC) Curve and computes Area Under Curve score of models.
 
+You may find this function on github page of project.
 
 ```python
-### For this project, I defined a function that will compute
-# prediction for each model and plot all performance metrics.
-
-def predictor(models, x, y):
-    """This fuction accepts model list, features and labels along with model parameters and computes cross val predict
-    score with 5 fold CV and plots every performance metric score, confusion matrices of model and ROC Curves."""
-
-    # Obtaining titles of the ML models defined by user.
-    model_titles=[]
-    for m in models:
-
-        r=m['label']
-        model_titles.append(r)
-
-    # Computing predictions of the model.
-    predictions=[]
-    for m in models:
-
-        model = m['model'] # select the model
-        y_predicted=cross_val_predict(model, x, y.values.ravel(), cv=5) #Computing predicted labels.    
-        predictions.append(y_predicted) # adding predictions to list predictions.
-
-    # Defining evaluation metrics.
-    eva_metrics=[recall_score,precision_score,f1_score,accuracy_score]
-    eva_metric_titles=["Recall Score","Precision Score","F1 Score","Accuracy Score"]   
-
-    # Plotting all the performance metrics as bar chart.
-    fig = plt.figure(figsize=(10,4))
-    fig.suptitle("Performance Metrics", fontsize=14, x=0.6, y=1.05)
-    labels=np.unique(y)
-    i=1
-    for measure, metric_title in zip(eva_metrics, eva_metric_titles):
-
-        plt.subplot(2,2,i,frameon=True)
-        plt.title(metric_title)
-
-        xa=np.arange(len(model_titles))
-        ya=[]
-
-        for c in range(len(predictions)):
-            ya.append(measure(y,predictions[c]))
-
-        plt.barh(xa,ya, color='tab:blue', edgecolor=None)
-        plt.yticks(xa, model_titles)
-        plt.xticks([])
-        plt.tick_params(axis='both', which='major', labelsize=11)
-        plt.xlim(0,1)
-        i += 1  
-        u=0
-        for c in range(len(predictions)):
-
-            model=("{0:.2f}".format(measure(y, predictions[c])))
-            plt.text(0.35,(0.0+float(u)),s=model,fontsize=11,color="black")
-            u +=1      
-        plt.tight_layout()
-    plt.show()  
-
-    # Plotting Confusion Matrices.
-    # Depending on amount of model, size of the figure changes for better illustration.
-    if len(models) == 1:
-        fig2 = plt.figure(figsize=(6,4),edgecolor="b",frameon=True) #if there is only one graph
-    elif len(models)==2:
-        fig2 = plt.figure(figsize=(9,4),edgecolor="b",frameon=True) #if there are two graphs
-    elif len(models) >2:
-        fig2 = plt.figure(figsize=(12,3),edgecolor="b",frameon=True)#if there are more than two graphs.
-
-    fig2.suptitle("Confusion Matrices", fontsize=14, x=0.47, y=1.05) #
-
-    f=1
-
-    for k, h in zip(predictions, model_titles):
-
-        if len(models) < 4:
-            plt.subplot(1,len(models),f,frameon=True)
-        else:
-            plt.subplot(2,len(models),f,frameon=True)
-
-        plt.title(h)
-        frame={'y':y.values.ravel(),'y_predicted':k}
-        df = pd.DataFrame(frame, columns=['y','y_predicted'])
-        confusion_matrix = pd.crosstab(df['y'], df['y_predicted'],
-                                       rownames=['True Label'], colnames=['Predicted Label'], margins = False)
-
-        sns.heatmap(confusion_matrix,annot=True,fmt="d",cmap="Blues",linecolor="blue",
-                    vmin=0,vmax=500)
-        fig2.tight_layout()
-        f +=1
-
-    #Plotting ROC Curve and computing AUC Score.    
-    fig3 = plt.figure(figsize=(12,6),edgecolor="b",frameon=True)    
-    for m in models:
-
-        model = m['model'] # select the model
-        y_predicted=cross_val_predict(model, x, y.values.ravel(), cv=5) #Computing predicted labels.
-
-        # Computing FPR and TPR
-        fpr, tpr, thresholds = roc_curve(y, y_predicted)
-        # Computing AUC Score.
-        auc = roc_auc_score(y,y_predicted)
-        # Plotting the AUC Score.
-        plt.plot(fpr, tpr, label='%s ROC: %0.3f' % (m['label'], auc))
-        # Custom settings for the plot
-        plt.plot([0, 1], [0, 1],'k--')
-        plt.xlim([-0.01, 1.0])
-        plt.ylim([0, 1.05])
-        plt.xlabel('1-Specificity(False Positive Rate)', fontsize=14)
-        plt.ylabel('Sensitivity(True Positive Rate)', fontsize=14)
-        plt.title('ROC Curve', fontsize=18)
-        plt.legend(loc="lower right",fontsize=11)
-    plt.show()
+predictor(models, x, y):
 ```
 
 
 ```python
 # All models
-
-clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=1.0, kernel='linear',gamma='auto_deprecated')}]#,
-     #{'label':'Kernelized SVM', 'model':svm.SVC(C=10.0, kernel='poly', degree=2,gamma='auto_deprecated')},
-     #{'label':'Logistic Regression','model':LogisticRegression(C=10, max_iter=1000,penalty= 'l2',
-     #                                                          solver= 'lbfgs')},
-     #{'label':'Gaussian Naive Bayes','model':GaussianNB()}]
+clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=1.0, kernel='linear',gamma='auto_deprecated')}],
+     {'label':'Kernelized SVM', 'model':svm.SVC(C=10.0, kernel='poly', degree=2,gamma='auto_deprecated')},
+     {'label':'Logistic Regression','model':LogisticRegression(C=10, max_iter=1000,penalty= 'l2',solver= 'lbfgs')},
+     {'label':'Gaussian Naive Bayes','model':GaussianNB()}]
 
 predictor(clfs, x=x2, y=y2)
 ```
 
-Even though models depict very high accuracy score, in class imbalance cases, accurarcy is not a good metric and should not be considered because minor class, in our case fraud transactions, does not contribute emprical risk. Therefore, we need to focus on F1 score which is combination of Recall and Precision.
+BU KISMA BIR GRAFIK GELECEK.
 
-
-```python
-# Kernelized Support Vector Machine
-clfs=[{'label':'Kernelized Degree 2 SVM', 'model':svm.SVC(C=10.0, kernel='poly', degree=2,gamma='auto_deprecated')}]
-
-predictor(clfs, x=x2, y=y2)
-```
-
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_30_0.png" alt="">
-
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_31_1.png" alt="">
-
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_32_2.png" alt="">
-
-
-
-```python
-clfs=[{'label':'Logistic Regression','model':LogisticRegression(C=10, max_iter=1000,
-                                                                penalty= 'l2', solver= 'lbfgs')}]
-
-predictor(clfs, x=x2, y=y2)
-```
-
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_32_0.png" alt="">
-
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_32_1.png" alt="">
-
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_32_2.png" alt="">
-
-
-
-```python
-# Gaussian Naive Bayes Classifier
-
-clfs=[{'label':'Gaussian','model':GaussianNB()}]
-
-predictor(clfs, x=x2, y=y2)
-```
-
-
-![png](output_33_0.png)
-
-
-
-![png](output_33_1.png)
-
-
-
-![png](output_33_2.png)
-
-
-
-```python
-#Definning hyperparameters for each model.
-
-clfs=[{'label':'Logistic Regression','model':LogisticRegression()}]
-
-hyperparameters=[{'penalty': ['l2'],"max_iter":[1000],'solver':['lbfgs'],
-                'C':[0.001,0.005,0.01,0.03,0.05,0.07,0.09,0.1,0.3,0.5,0.7,0.9,2.0,5.0,10.0]}]
-
-grid_search_plotter(models=clfs,grid_search_values=hyperparameters,x=x2,y=y2)
-```
-
-    Best Parameters Choosen
-    -----------------------
-    Best Parameters:Logistic Regression {'C': 0.03, 'max_iter': 1000, 'penalty': 'l2', 'solver': 'lbfgs'}
-
-
-
-![png](output_34_1.png)
-
-
-
-![png](output_34_2.png)
-
-
-
-![png](output_34_3.png)
+Even though models depict very high accuracy score, in class imbalance cases, accuracy is not a good metric and should not be considered because minor class, (fraud transactions) does not contribute empirical risk. Therefore, we can easily obtain high accuracy score by prediction non-fraud transactions as non-fraud transactions. So, I need to focus on F1 score which is combination of Recall and Precision to measure my model success.
 
 
 ## 2. Combat with Imbalanced Dataset
 
-There are many ways to combat with class imbalance such as undersampling, oversampling and cost sensetive loss functions. In my analysis, I will include undersampling and cost sensetive loss function methods.
+There are many ways to combat with class imbalance such as under-sampling, over-sampling and cost sensitive loss functions.
+* **Under-sampling:** Eliminating training observations from majority class to have balanced dataset.
+* **Over-sampling:** Generating minority class-like observations to obtain balanced dataset.
+* **Cost Sensitive Loss Functions:** Replacing usual loss function of model with class sensitive loss function to be able to trade of between false positives and false negatives.
+
+ In my analysis, I include under-sampling and cost sensitive loss function methods and not over-sampling because I do not want to possess more observation sake of model run time.
 
 
 
-### 2.1 Cost Sensetive Loss Functions
+### 2.1 Cost Sensitive Loss Functions
 
-Let's continue using same models but with cost sensetive loss functions. Cost sensetive loss functions are modified loss functions that penalize particular class labels according to assign costs to that class. In this example, we would like to highly penalize false negatives.
+Let's continue using same models but with cost sensitive loss functions. Cost sensitive loss functions are modified loss functions that penalize particular class labels according to assign costs to that class. In this example, we would like to **highly penalize false negatives** meaning that penalizing **predicting fraud transactions as non-fraud transaction.**
 
 
 ```python
-# Cost Sensetive Logistic Regression
-
+# Cost Senseitive Logistic Regression
 clfs=[{'label':'Logistic Regression','model':LogisticRegression(C=0.03, max_iter=5000,penalty= 'l2', solver= 'lbfgs',
                                                                class_weight={1:6})}]
 predictor(clfs, x=x2, y=y2)
@@ -4630,7 +4590,7 @@ predictor(clfs, x=x2, y=y2)
 
 
 ```python
-# Cost Sensetive Kernelized SVM
+# Cost Sensitive Kernelized SVM
 
 clfs=[{'label': 'Kernelized SVM', 'model':svm.SVC(C=10.0, kernel='poly',degree=2,gamma='auto_deprecated',class_weight={1:6})}]#,
     #      {'label':'Kernelized D4 SVM', 'model':svm.SVC(C=2.0, kernel='poly', degree=4,gamma='auto_deprecated')},
@@ -4654,7 +4614,7 @@ predictor(clfs, x=x2, y=y2)
 
 
 ```python
-# Cost Sensetive Linear SVM
+# Cost Sensitive Linear SVM
 
 clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=10.0, kernel='linear',gamma='auto_deprecated',class_weight={1:5})}]#,
     #      {'label':'Kernelized D4 SVM', 'model':svm.SVC(C=2.0, kernel='poly', degree=4,gamma='auto_deprecated')},
@@ -4664,19 +4624,21 @@ clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=10.0, kernel='linear',gamma='aut
 predictor(clfs, x=x2, y=y2)
 ```
 
-###  2.2 Undersampling
+###  2.2 Under-sampling
 
-Undersampling is one of the method that can be used for dealing with class imbalance. Undersampling appraoch as follows: non-fraud observations (minority class) should be undersampled  to be able to create balanced dataset.
+* Under-sampling is one of the method that can be used for dealing with class imbalance. Under-sampling approach as follows: non-fraud observations (majority class) should be under-sampled a.k.a eliminated to be able to create balanced dataset with equal amount of observations from each class.
 
-With undersampling approach, I am able to compute correlation matrix for more precise relationship between features and class labels. Completely balanced dataset would have 492 fraud and 492 non-fraud transaction records.
+* With under-sampling approach, I am able to compute correlation matrix for obtaining  more precise understanding of feature relationship and class labels. Completely balanced dataset would have 492 fraud and 492 non-fraud transaction records.
 
-On one hand, undersampling approach is fast due to smaller dataset, on the other hand we lose information that we have.
+* Under-sampling has its own pros and cons. On one hand, under-sampling approach is fast due to smaller dataset that we are going to obtain by removing many observations, on the other hand we lose lot of information that we already have about the problem.
 
+
+In this approach, I randomly choose non-fraud 492 observations to balance the dataset with %50-%50 class label.
 
 ```python
-# Undersampling to obtain balanced dataset.
+# Under-sampling to obtain balanced dataset.
 
-# Separating fraud transactions.
+# Separating fraud and non-fraud transactions.
 fraud_scaled=data.loc[data["Class"]==1]
 non_fraud_scaled=data.loc[data["Class"]==0]
 
@@ -4689,7 +4651,6 @@ frames=[fraud_scaled,sub_samp_non_fraud]
 subsampled_data=pd.concat(frames)
 ```
 
-
 ```python
 # Class Balance after subsampling and outlier removal.
 print("Number of non-fraduelent transaction:",subsampled_data.loc[data.Class == 0, 'Class'].count())
@@ -4699,7 +4660,8 @@ print("Number of fraduelent transaction:",subsampled_data.loc[data.Class == 1, '
     Number of non-fraduelent transaction: 492
     Number of fraduelent transaction: 492
 
-
+Here we go. Now, I get rid of class imbalance. Now I want to compute **correlation matrix** again.
+This matrix will give better insights about **inter-feature** relationships. As next step, I am going to determine **most impactful features of dataset** and conduct **outlier detection and outlier removal.**
 
 ```python
 # Plotting the correlation matrix of subsampled dataset.

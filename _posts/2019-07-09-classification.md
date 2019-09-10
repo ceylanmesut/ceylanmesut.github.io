@@ -4383,21 +4383,6 @@ y2["Class"] = y2.Class.astype(int)
 
 ```
 
-    C:\Users\mesut\.conda\envs\tensor-flow-gpu\lib\site-packages\ipykernel_launcher.py:8: SettingWithCopyWarning:
-    A value is trying to be set on a copy of a slice from a DataFrame.
-    Try using .loc[row_indexer,col_indexer] = value instead
-
-    See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-
-
-
-
-```python
-print("Hello World")
-```
-
-    Hello World
-
 
 
 ```python
@@ -4536,16 +4521,11 @@ clfs=[{'label':'Kernelized Degree 2 SVM', 'model':svm.SVC(C=10.0, kernel='poly',
 predictor(clfs, x=x2, y=y2)
 ```
 
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_30_0.png" alt="">
 
-![png](output_31_0.png)
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_31_1.png" alt="">
 
-
-
-![png](output_31_1.png)
-
-
-
-![png](output_31_2.png)
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_32_2.png" alt="">
 
 
 
@@ -4556,16 +4536,11 @@ clfs=[{'label':'Logistic Regression','model':LogisticRegression(C=10, max_iter=1
 predictor(clfs, x=x2, y=y2)
 ```
 
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_32_0.png" alt="">
 
-![png](output_32_0.png)
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_32_1.png" alt="">
 
-
-
-![png](output_32_1.png)
-
-
-
-![png](output_32_2.png)
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_32_2.png" alt="">
 
 
 
@@ -4598,7 +4573,6 @@ clfs=[{'label':'Logistic Regression','model':LogisticRegression()}]
 hyperparameters=[{'penalty': ['l2'],"max_iter":[1000],'solver':['lbfgs'],
                 'C':[0.001,0.005,0.01,0.03,0.05,0.07,0.09,0.1,0.3,0.5,0.7,0.9,2.0,5.0,10.0]}]
 
-
 grid_search_plotter(models=clfs,grid_search_values=hyperparameters,x=x2,y=y2)
 ```
 
@@ -4627,7 +4601,7 @@ There are many ways to combat with class imbalance such as undersampling, oversa
 
 ### 2.1 Cost Sensetive Loss Functions
 
-#### Let's continue using same models but with cost sensetive loss functions. Cost sensetive loss functions are modified loss functions that penalize particular class labels according to assign costs to that class. In this example, we would like to highly penalize false negatives.
+Let's continue using same models but with cost sensetive loss functions. Cost sensetive loss functions are modified loss functions that penalize particular class labels according to assign costs to that class. In this example, we would like to highly penalize false negatives.
 
 
 ```python
@@ -4635,8 +4609,6 @@ There are many ways to combat with class imbalance such as undersampling, oversa
 
 clfs=[{'label':'Logistic Regression','model':LogisticRegression(C=0.03, max_iter=5000,penalty= 'l2', solver= 'lbfgs',
                                                                class_weight={1:6})}]
-
-
 predictor(clfs, x=x2, y=y2)
 ```
 
@@ -4711,7 +4683,6 @@ sub_samp_non_fraud=non_fraud_scaled.sample(n=492, replace=False)
 # Concataneting two dataframe.
 frames=[fraud_scaled,sub_samp_non_fraud]
 subsampled_data=pd.concat(frames)
-
 ```
 
 
@@ -9038,15 +9009,15 @@ grid_search_plotter(models=clfs,grid_search_values=hyperparameters,x=x,y=y)
 
 
 
-![png](output_57_1.png)
+## Result
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_57_1.png" alt="">
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_57_2.png" alt="">
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_57_3.png" alt="">
 
 
 
-![png](output_57_2.png)
-
-
-
-![png](output_57_3.png)
 
 
 After hyperparameter tunning, all models have increased AUC score especially, SVM with polynomial kernel. On balanced dataset, Kernelized SVM outperforms all other models with its F1 and AUC scores, 0.98 and 0.984 respectively.

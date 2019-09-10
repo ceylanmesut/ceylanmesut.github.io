@@ -7,8 +7,8 @@ header:
 excerpt: "Credit card fraud detection machine learning project."
 
 toc: true
-toc_label: "My Table of Contents"
-toc_icon: "file"
+toc_label: "On This Page"
+toc_icon: "file-alt"
 toc_sticky: true
 ---
 ## Introduction

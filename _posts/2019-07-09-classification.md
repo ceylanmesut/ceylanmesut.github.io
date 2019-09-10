@@ -145,11 +145,8 @@ plt.show()
 
 ```
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/output_12_0.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_12_0.png" alt="">
 
-![png](output_12_0.png)
-
-![](output_12_0.png)
 
 * As Principal Component Analysis is applied for dimensionality reduction on dataset, all features but Amount, Time and Class is Gaussian distributed.
 * Amount, Time and Class features require individual analysis so that we can get deeper insights out of the data.
@@ -178,17 +175,15 @@ plt.title("Distribution of Time of Non-Fraud Transantion")
 
 
 
-    Text(0.5, 1.0, 'Distribution of Time of Non-Fraud Transantion')
 
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_15_1.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_15_2.png" alt="">
 
-
-
-![png](output_15_1.png)
-
-
-
-![png](output_15_2.png)
-
+<figure class="half">
+    <a href="/images/output_15_1.png"><img src="/images/output_15_1.png"></a>
+    <a href="images/output_15_2.png"><img src="/images/output_15_2.png"></a>
+    <figcaption>Caption describing these two images.</figcaption>
+</figure>
 
 
 ```python

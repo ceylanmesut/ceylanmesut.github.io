@@ -7,8 +7,7 @@ header:
 excerpt: "Credit card fraud detection machine learning project."
 
 ---
-# Project: Credit Card Fraud Detection
-
+# Introduction
 * **Dataset**: Kaggle dataset that anonymized credit card transactions labeled as fraudulent or genuine- Machine Learning Group - ULB
 
 
@@ -19,9 +18,6 @@ excerpt: "Credit card fraud detection machine learning project."
 
 
 * **Link**: https://www.kaggle.com/mlg-ulb/creditcardfraud
-
-#####  Mesut Ceylan - Date
-
 
 
 ## Approach:
@@ -153,8 +149,9 @@ plt.show()
 
 ![png](output_12_0.png)
 
+![](output_12_0.png)
 
-* As Principal Component Analysis is applied for dimensionality reduction, all features but Amount, Time and Class is Gaussian distributed.
+* As Principal Component Analysis is applied for dimensionality reduction on dataset, all features but Amount, Time and Class is Gaussian distributed.
 * Amount, Time and Class features require individual analysis so that we can get deeper insights out of the data.
 
 

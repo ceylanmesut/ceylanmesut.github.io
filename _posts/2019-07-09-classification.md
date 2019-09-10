@@ -129,20 +129,16 @@ Let's drop time feature from dataset and check distributions of all features to 
 # Dropping the time column from dataset.
 data_wo_time=data.iloc[:,1:]
 data_wo_time.head()
-
 columns=data_wo_time.columns
 
 # Plotting distribution of features.
 fig=plt.figure(figsize=[20,20])
 
-
 for i, column in enumerate(columns):
     ax=fig.add_subplot(5,6,i+1)
     data_wo_time.hist(column=column, bins=75, ax=ax,color = "darkblue", ec='white', grid=False)
     ax.set_title(column+" Distribution")
-
 plt.show()
-
 ```
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_12_0.png" alt="">
@@ -154,61 +150,42 @@ plt.show()
 
 ```python
 # Seperating of Fraud and Non-Fraud Transaction
-
 fraud_data=data.loc[data["Class"]==1]
 non_fraud_data=data.loc[data["Class"]==0]
-
 ```
 
 
 ```python
 # Analysis of transaction time
-
 fraud_data.hist(column="Time",bins=50,color = "grey", ec='white')
 plt.title("Distribution of Time of Fraud Transantion")
 
 non_fraud_data.hist(column="Time",bins=50,color = "grey", ec='white')
 plt.title("Distribution of Time of Non-Fraud Transantion")
-
 ```
 
 
 
-
-
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_15_1.png" alt="">
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_15_2.png" alt="">
-
 <figure class="half">
     <a href="/images/output_15_1.png"><img src="/images/output_15_1.png"></a>
     <a href="images/output_15_2.png"><img src="/images/output_15_2.png"></a>
-    <figcaption>Caption describing these two images.</figcaption>
 </figure>
 
 
 ```python
 # Analysis of Amount on Fraud and Non-Fraud Transactions
-
 fraud_data.hist(column="Amount",bins=50,color = "grey", ec='white')
 plt.title("Amount of Fraud Transantion in $")
 non_fraud_data.hist(column="Amount",bins=50,color = "grey", ec='white')
 plt.title("Amount of Non-Fraud Transantion in $")
-
 ```
 
 
 
-
-    Text(0.5, 1.0, 'Amount of Non-Fraud Transantion in $')
-
-
-
-
-![png](output_16_1.png)
-
-
-
-![png](output_16_2.png)
+<figure class="half">
+    <a href="/images/output_15_1.png"><img src="/images/output_16_1.png"></a>
+    <a href="images/output_15_2.png"><img src="/images/output_16_2.png"></a>
+</figure>
 
 
 To be able to compare, let's restrict the amount of transaction.
@@ -222,30 +199,25 @@ plt.title("Distribution of Amount of Fraud Transantion in $")
 # Distribution of non-fraud transantion amount $850
 (non_fraud_data.loc[(non_fraud_data['Amount'] <= 850)]).hist(column="Amount", bins=40,color = "grey", ec='white')
 plt.title("Distribution of Amount of Non-Fraud Transantion in $")
-
 ```
 
 
 
 
-    Text(0.5, 1.0, 'Distribution of Amount of Non-Fraud Transantion in $')
+
+<figure class="half">
+    <a href="/images/output_15_1.png"><img src="/images/output_18_1.png"></a>
+    <a href="images/output_15_2.png"><img src="/images/output_18_2.png"></a>
+</figure>
 
 
 
+Fraud transactions do not follow certain distribution but distribution of non-fraud transactions has positive skewness. Also one can observed that effect of day pattern on amount of transactions. Both fraud and non-fraud transactions decrease in the night time.
 
-![png](output_18_1.png)
-
-
-
-![png](output_18_2.png)
-
-
-Fraud transactions do not follow certain distribution but distribution of non-fraud transactions has positive skewness.
 
 
 ```python
 # As all other features are scaled with PCA, let's scale the Amount and Time Features as well.
-
 robust_scaler = RobustScaler()
 
 converted_column=data["Amount"].values.astype(float).reshape(-1,1)
@@ -257,7 +229,6 @@ data.insert(loc=1,column="Scaled_Time",value=robust_scaler.fit_transform(convert
 
 # Droping the Time and Amount features.
 data.drop(['Time','Amount'], axis=1, inplace=True)
-
 ```
 
 
@@ -4391,8 +4362,9 @@ corr.style.background_gradient(cmap='coolwarm',axis=None).set_precision(2)
 
 
 
-* V4, V11, V2 are the features that highly correlated with transaction type.
-* V17, V14 and V12 are the features that least correlated with transaction type.
+
+* V4, V11, V2 are the features that highly correlated with class labels.
+* V17, V14 and V12 are the features that least correlated with class labels.
 
 ## 1. Models Againts Imbalanced Dataset
 

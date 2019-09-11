@@ -4541,7 +4541,7 @@ Although each of the models that I use require longer and more detailed explanat
 Support Vector Machine is  classifier that can be used in supervised learning problems. Model utilizes algorithms to **generate hyperplane** which separate each class observations to classify them. Optimal hyperplane is **a line on two dimensional space whereas it is plane in multi dimensional space.** SVM uses below loss function.
 
 
-Linear SVM with L2 Penalizer ||w||2 with lambda parameter
+Linear SVM with L2 Penalizer
 
 ![image-center]({{ site.url }}{{ site.baseurl }}/images/SVM_Loss.png){: .align-center}
 
@@ -4620,26 +4620,27 @@ Even though all models depict very **high accuracy score**, in class imbalance c
 
 Therefore, we can **easily obtain high accuracy score by predicting non-fraud transactions correctly.** So, I need to **focus on F1 score** which is combination of **Recall and Precision** to measure my model success.
 
-
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/cf_matrix.png" alt="">
+![image-center]({{ site.url }}{{ site.baseurl }}/images/cf_matrix.png){: .align-center}
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/acc.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/f1.png" alt="">
-![image-center]({{ site.url }}{{ site.baseurl }}/images/recall.png){: .align-center}
-![image-center]({{ site.url }}{{ site.baseurl }}/images/precision.png){: .align-center}
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/recall.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/precision.png" alt="">
 
 
 
-As an outcome of the model, I expect to obtain perfect balance between Precision and Recall since it is crucial for bank to accurately classify fraud transactions in the mean time not blocking non-fraud transactions as fraud transaction.
+As an **outcome** of the model, I expect to obtain **perfect balance between Precision and Recall** since it is crucial for bank to accurately classify fraud transactions in the mean time not blocking non-fraud transactions as fraud transaction.
 
-One can observe from confusion matrices that the best performing model is **Linear SVM with %80 F1 score**, classifying 378 fraud cases out of 492. However, the model wrongly  classifies 114 fraud transactions as non-fraud and 70 non-fraud transactions as fraud transactions.
+One can observe from confusion matrices that the best performing model is **Linear SVM with %80 F1 score**, classifying **378 fraud cases out of 492.** However, the model wrongly  classifies 114 fraud transactions as non-fraud and 70 non-fraud transactions as fraud transactions.
 
 
 ## 2. Combat with Imbalanced Dataset
 
+Imbalanced dataset is **very common on real-world dataset** where there is high amount of difference between classes. In imbalanced datasets, usually minority class is %1 of overall dataset. This type of datasets are part of the data that includes **rare events occuring in the world.**
+
 There are many ways to combat with class imbalance such as under-sampling, over-sampling and cost sensitive loss functions.
 * **Under-sampling:** Eliminating training observations from majority class to have balanced dataset.
 * **Over-sampling:** Generating minority class-like observations to obtain balanced dataset.
-* **Cost Sensitive Loss Functions:** Replacing usual loss function of model with class sensitive loss function to be able to trade of between false positives and false negatives.
+* **Cost Sensitive Loss Functions:** Replacing usual loss function of model with **class sensitive loss function** to be able to trade of between false positives and false negatives.
 
  In my analysis, I include under-sampling and cost sensitive loss function methods and not over-sampling because I do not want to possess more observation sake of model run time.
 

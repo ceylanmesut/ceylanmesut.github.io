@@ -4515,7 +4515,7 @@ corr.style.background_gradient(cmap='coolwarm',axis=None).set_precision(2)
 
 ## 1. Models vs. Imbalanced Dataset
 
-I continue project with testing the four different models on imbalanced dataset to observe how they behave against class imbalance.
+Let's continue project with testing the four different models on imbalanced dataset to observe how they behave against class imbalance.
 
 
 ```python
@@ -4530,25 +4530,24 @@ y2["Class"] = y2.Class.astype(int)
 For this project, I defined a function called **predictor** that computes predictions for each model,  plots all four performance metrics along with confusion matrix and also finally draws Receiver Operating Characteristics (ROC) Curve and computes Area Under Curve score of models.
 
 You may find this function on github page of project.
+
 link: https://github.com/ceylanmesut/Machine-Learning-Project-Fraud-Detection/blob/master/predictor_function.ipynb
 
 
-```python
-predictor(models, x, y):
-```
+Although each of the models that I use require longer and more detailed explanation for comprehensive understanding, I prefer briefly mention them in my post. So here we go:
 
 ### **Support Vector Machines**
 
-Support Vector Machine is  classifier that can be used in supervised learning problems. Model utilizes algorithms to generate hyperplane which separate each class observations to classify them. Optimal hyperplane is a line on two dimensional space whereas it is plane in multi dimensional space. SVM uses below loss function.
+Support Vector Machine is  classifier that can be used in supervised learning problems. Model utilizes algorithms to **generate hyperplane** which separate each class observations to classify them. Optimal hyperplane is **a line on two dimensional space whereas it is plane in multi dimensional space.** SVM uses below loss function.
 
 
 Linear SVM with L2 Penalizer ||w||2 with lambda parameter
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss.png" alt="">
 
 
-I use kernel trick on SVM model to generate more flexible model to fit the dataset with non-linear decision boundary. Therefore,  I use Polynomial Kernel on SVM with degree 2.
+I use **kernel trick** on SVM model to generate more flexible model to fit the dataset with **non-linear decision boundary**. Therefore,  I use Polynomial Kernel on SVM with degree 2.
 
-* **Kernel Trick:** Need for kernel trick arises from finding non-linear decision boundaries to fit the data better way. Kernel trick operates higher dimensional feature spaces without explicitly computing transformation of feature vectors. This trick lies on computing inner products of observations as following:
+* **Kernel Trick:** Need for kernel trick arises from **finding non-linear decision boundaries to fit the data better.** Kernel trick operates higher dimensional feature spaces without explicitly computing transformation of feature vectors. This trick lies on computing **inner products of observations** as following:
 
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/kernel_trick.png" alt="">
@@ -4564,26 +4563,39 @@ One can observe different effect of increasing degree of polynomial of kernel fu
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_K2.png" alt="">
 
 
+
 ### **Logistic Regression**
 
-Logistic Regression is a linear classification model that part of  probabilistic models. Logistic Regression is the model can be used in binary classification problems due to its logistic function. It computes class probabilities and chooses best weights to maximize log-likelihood or minimize logistic loss function.
-
-Logistic Function:
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/log_func.png" alt="">
+Logistic Regression is a **linear classification model** that part of  probabilistic models. Logistic Regression is the model can be used in **binary classification** problems due to its logistic function. It computes **class probabilities and chooses best weights to maximize log-likelihood or minimize logistic loss function.**
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/log_thr.png" alt="">
 
-One can observe that logistic regression classifies class labels according to computed probabilities of each observation. Observations above threshold are classified as one class label and below ones get other class label.
+One can observe that logistic regression classifies class labels according to **computed probabilities of each observation.** Observations above **threshold** are classified as one class label and below ones get other class label.
 
-In my model, I use Logistic Regression model with Gaussian prior (L2 penalizer) to regularize model complexity. L2 regularizer penalizes large coefficients to go extreme or deep dive to zero.
+In my model, I use Logistic Regression model with **Gaussian prior (L2 penalizer)** to regularize model complexity. L2 regularizer **penalizes large coefficients to go extreme or deep dive to zero.**
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/log_loss.png" alt="">
 
+
 ### **Gaussian Naive Bayes**
 
+Second probabilistic model that I used in this problem is **Naive Bayes classifier**. This model is based on Bayes' Theorem. The model is called "Naive" due to **strong independence assumption** between features of dataset.
+
+Specifically, Gaussian Naive Bayes model is designed for dataset that **consists of Gaussian distributed features.** With Bayes theorem model computes **probability of class label given class prior.**
 
 
-Let's define machine learning models with pre-defined hyperparameters.
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/GNB.png" alt="Taken from Chris Albon">
+
+
+
+As brief model introduction is completed, let's continue with **calling predictor function and start making classification.**
+
+Let's call the function that I created for this problem.
+```python
+predictor(models, x, y):
+```
+
+Let's define machine learning models for classification problem. I randomly choose model parameters but I will not optimize them due to run time restrictions yet I will optimize my model when I eliminate class imbalance.
 
 ```python
 clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=1.0, kernel='linear',gamma='auto_deprecated')}],
@@ -4603,7 +4615,13 @@ predictor(clfs, x=x2, y=y2)
 
 Even though all models depict very **high accuracy score**, in class imbalance cases, **accuracy is not a good metric** and should not be considered because minor class, (fraud transactions) does not contribute empirical risk.
 
-Therefore, we can easily obtain high accuracy score by prediction non-fraud transactions as non-fraud transactions. So, I need to **focus on F1 score** which is combination of Recall and Precision to measure my model success.
+Therefore, we can **easily obtain high accuracy score by predicting non-fraud transactions correctly.** So, I need to **focus on F1 score** which is combination of **Recall and Precision** to measure my model success.
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/cf_matrix.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/acc.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/f1.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/recall.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/precision.png" alt="">
 
 As an outcome of the model, I expect to obtain perfect balance between Precision and Recall since it is crucial for bank to accurately classify fraud transactions in the mean time not blocking non-fraud transactions as fraud transaction.
 

@@ -4586,7 +4586,7 @@ Specifically, Gaussian Naive Bayes model is designed for dataset that **consists
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/GNB.png" alt="image-center">
 
-<figure class="half">
+<figure class="image-center">
     <a href="/images/output_15_1.png"><img src="/images/GNB.png"></a>
 </figure>
 

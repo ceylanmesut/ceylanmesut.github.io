@@ -4537,9 +4537,19 @@ link: https://github.com/ceylanmesut/Machine-Learning-Project-Fraud-Detection/bl
 predictor(models, x, y):
 ```
 
-* SVM: Support Vector Machines is  classifier that can be used in supervised learning problems. Model utilizes algorithms to generate hyperplane which separate each class observations to classify them. Optimal hyperplane is a line on two dimensional space whereas it is plane in multi dimensional space. SVM uses below loss function.
+### **Support Vector Machines**
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss.png" alt="">
+Support Vector Machine is  classifier that can be used in supervised learning problems. Model utilizes algorithms to generate hyperplane which separate each class observations to classify them. Optimal hyperplane is a line on two dimensional space whereas it is plane in multi dimensional space. SVM uses below loss function.
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss.png" alt="Linear SVM with L2 Penalizer (lambda)">
+
+
+I also used kernel trick on SVM model to generate more flexible model to fit the dataset. Therefore,  I use Polynomial Kernel on SVM with degree 2.
+
+* **Kernel Trick:**
+
+
+
 
 Let's define machine learning models with pre-defined hyperparameters.
 

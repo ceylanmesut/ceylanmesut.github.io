@@ -4541,15 +4541,23 @@ predictor(models, x, y):
 
 Support Vector Machine is  classifier that can be used in supervised learning problems. Model utilizes algorithms to generate hyperplane which separate each class observations to classify them. Optimal hyperplane is a line on two dimensional space whereas it is plane in multi dimensional space. SVM uses below loss function.
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss.png" alt="Linear SVM with L2 Penalizer (lambda)">
+
+Linear SVM with L2 Penalizer (lambda)
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss.png" alt="">
 
 
 I also used kernel trick on SVM model to generate more flexible model to fit the dataset. Therefore,  I use Polynomial Kernel on SVM with degree 2.
 
-* **Kernel Trick:**
+* **Kernel Trick:** Need for kernel trick arises from finding non-linear decision boundaries to fit the data better way. Kernel trick operates higher dimensional feature spaces without explicitly computing transformation of feature vectors. This trick lies on computing inner products of observations as following:
 
 
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/kernel_trick.png" alt="">
 
+With the kernel trick, one can form more flexible SVM models depending on kernel type that being used.
+
+SVM with kernel trick:
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss_kernelized.png" alt="">
 
 Let's define machine learning models with pre-defined hyperparameters.
 

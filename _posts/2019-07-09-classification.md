@@ -4542,7 +4542,8 @@ Support Vector Machine is  classifier that can be used in supervised learning pr
 
 
 Linear SVM with L2 Penalizer ||w||2 with lambda parameter
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss.png" alt="">
+
+![image-center]({{ site.url }}{{ site.baseurl }}/images/SVM_Loss.png){: .align-center}
 
 
 I use **kernel trick** on SVM model to generate more flexible model to fit the dataset with **non-linear decision boundary**. Therefore,  I use Polynomial Kernel on SVM with degree 2.
@@ -4550,12 +4551,13 @@ I use **kernel trick** on SVM model to generate more flexible model to fit the d
 * **Kernel Trick:** Need for kernel trick arises from **finding non-linear decision boundaries to fit the data better.** Kernel trick operates higher dimensional feature spaces without explicitly computing transformation of feature vectors. This trick lies on computing **inner products of observations** as following:
 
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/kernel_trick.png" alt="">
-
+![image-center]({{ site.url }}{{ site.baseurl }}/images/kernel_trick.png){: .align-center}
 
 SVM with kernel trick:
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss_kernelized.png" alt="">
+
+![image-center]({{ site.url }}{{ site.baseurl }}/images/SVM_Loss_kernelized.png){: .align-center}
+
 
 One can observe different effect of increasing degree of polynomial of kernel function, **higher the degree of polynomial more flexible decision boundary** that we will get. However, higher degree polynomial kernels **bring risk of over fitting** the data.
 
@@ -4568,14 +4570,15 @@ One can observe different effect of increasing degree of polynomial of kernel fu
 
 Logistic Regression is a **linear classification model** that part of  probabilistic models. Logistic Regression is the model can be used in **binary classification** problems due to its logistic function. It computes **class probabilities and chooses best weights to maximize log-likelihood or minimize logistic loss function.**
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/log_thr.png" alt="">
+
+![image-center]({{ site.url }}{{ site.baseurl }}/images/log_thr.png){: .align-center}
 
 One can observe that logistic regression classifies class labels according to **computed probabilities of each observation.** Observations above **threshold** are classified as one class label and below ones get other class label.
 
 In my model, I use Logistic Regression model with **Gaussian prior (L2 penalizer)** to regularize model complexity. L2 regularizer **penalizes large coefficients to go extreme or deep dive to zero.**
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/log_loss.png" alt="">
 
+![image-center]({{ site.url }}{{ site.baseurl }}/images/log_loss.png){: .align-center}
 
 ### **Gaussian Naive Bayes**
 
@@ -4610,7 +4613,7 @@ predictor(clfs, x=x2, y=y2)
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_14_2.png" alt="">
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_14_3.png" alt="">
+![image-center]({{ site.url }}{{ site.baseurl }}/images/output_14_3.png){: .align-center}
 
 
 Even though all models depict very **high accuracy score**, in class imbalance cases, **accuracy is not a good metric** and should not be considered because minor class, (fraud transactions) does not contribute empirical risk.
@@ -4621,8 +4624,9 @@ Therefore, we can **easily obtain high accuracy score by predicting non-fraud tr
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/cf_matrix.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/acc.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/f1.png" alt="">
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/recall.png" alt="">
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/precision.png" alt="">
+![image-center]({{ site.url }}{{ site.baseurl }}/images/recall.png){: .align-center}
+![image-center]({{ site.url }}{{ site.baseurl }}/images/precision.png){: .align-center}
+
 
 
 As an outcome of the model, I expect to obtain perfect balance between Precision and Recall since it is crucial for bank to accurately classify fraud transactions in the mean time not blocking non-fraud transactions as fraud transaction.

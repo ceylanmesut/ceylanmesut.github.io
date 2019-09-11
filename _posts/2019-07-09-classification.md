@@ -4560,7 +4560,8 @@ SVM with kernel trick:
 
 As one can observe different effect of increasing degree of polynomial of kernel function, **higher the degree of polynomial more flexible decision boundary** that we will get.
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_K.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_K1.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_K2.png" alt="">
 
 Let's define machine learning models with pre-defined hyperparameters.
 

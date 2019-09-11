@@ -4646,9 +4646,16 @@ There are many ways to combat with class imbalance such as under-sampling, over-
 
 
 
-### 2.1 Cost Sensitive Loss Functions
+### Cost Sensitive Loss Functions
 
-Let's continue using same models but with cost sensitive loss functions. Cost sensitive loss functions are modified loss functions that penalize particular class labels according to assign costs to that class. In this example, we would like to **highly penalize false negatives** meaning that penalizing **predicting fraud transactions as non-fraud transaction.**
+Let's continue using same models but with **cost sensitive loss functions.** Machine learning algorithms are designed to **predict/classify classes with equal cost** penalty. In this project, we need to **change cost penalty for each class,** since we would like to correctly classify fraudulent transactions.
+
+Cost sensitive loss functions are modified loss functions that penalize particular class labels according to assign costs to that class. In this example, we would like to **highly penalize false negatives** meaning that penalizing **predicting fraud transactions as non-fraud transaction.**
+
+![image-center]({{ site.url }}{{ site.baseurl }}/images/cost_sens.png){: .align-center}
+![image-center]({{ site.url }}{{ site.baseurl }}/images/cost_sens2.png){: .align-center}
+
+In my machine learning models, I assign different cost amount for each class label by using **class_weight** parameter sections of models.
 
 
 ```python
@@ -4663,63 +4670,38 @@ predictor(clfs, x=x2, y=y2)
 
 
 
-![png](output_37_1.png)
-
-
-
-![png](output_37_2.png)
-
-
 
 ```python
 # Cost Sensitive Kernelized SVM
 
-clfs=[{'label': 'Kernelized SVM', 'model':svm.SVC(C=10.0, kernel='poly',degree=2,gamma='auto_deprecated',class_weight={1:6})}]#,
-    #      {'label':'Kernelized D4 SVM', 'model':svm.SVC(C=2.0, kernel='poly', degree=4,gamma='auto_deprecated')},
-    #{'label':'Kernelized SVM D2', 'model':svm.SVC(C=1.5, kernel='poly', degree=2,gamma='auto_deprecated')}]
-
-
+clfs=[{'label': 'Kernelized SVM', 'model':svm.SVC(C=10.0, kernel='poly',degree=2,gamma='auto_deprecated',class_weight={1:6})}]
 predictor(clfs, x=x2, y=y2)
 ```
 
 
-![png](output_38_0.png)
-
-
-
-![png](output_38_1.png)
-
-
-
-![png](output_38_2.png)
 
 
 
 ```python
 # Cost Sensitive Linear SVM
-
-clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=10.0, kernel='linear',gamma='auto_deprecated',class_weight={1:5})}]#,
-    #      {'label':'Kernelized D4 SVM', 'model':svm.SVC(C=2.0, kernel='poly', degree=4,gamma='auto_deprecated')},
-    #{'label':'Kernelized SVM D2', 'model':svm.SVC(C=1.5, kernel='poly', degree=2,gamma='auto_deprecated')}]
-
-
+clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=10.0, kernel='linear',gamma='auto_deprecated',class_weight={1:5})}]
 predictor(clfs, x=x2, y=y2)
 ```
 
-###  2.2 Under-sampling
+###  Under-Sampling
 
-* Under-sampling is one of the method that can be used for dealing with class imbalance. Under-sampling approach as follows: non-fraud observations (majority class) should be under-sampled a.k.a eliminated to be able to create balanced dataset with equal amount of observations from each class.
+* Under-sampling is one of the method that can be used for dealing with class imbalance. Under-sampling approach as follows: **non-fraud observations (majority class) should be under-sampled a.k.a eliminated** to be able to create **balanced dataset with equal amount** of observations from each class.
 
-* With under-sampling approach, I am able to compute correlation matrix for obtaining  more precise understanding of feature relationship and class labels. Completely balanced dataset would have 492 fraud and 492 non-fraud transaction records.
+* With under-sampling approach, I am able to compute **correlation matrix for obtaining  more precise understanding** of feature relationship and class labels. Completely balanced dataset would have **492 fraud and 492 non-fraud transactions.**
 
-* Under-sampling has its own pros and cons. On one hand, under-sampling approach is fast due to smaller dataset that we are going to obtain by removing many observations, on the other hand we lose lot of information that we already have about the problem.
+* Under-sampling has its **own pros and cons.** On one hand, under-sampling approach is **fast** due to smaller dataset that we are going to obtain by removing many observations, on the other hand we **lose lot of information** that we already have about the problem.
 
 
-In this approach, I randomly choose non-fraud 492 observations to balance the dataset with %50-%50 class label.
+In this approach, I randomly choose **non-fraud 492 observations** to balance the dataset with %50-%50 class label.
 
+
+Let's separate fraud and non-fraud transactions and merge them.
 ```python
-# Under-sampling to obtain balanced dataset.
-
 # Separating fraud and non-fraud transactions.
 fraud_scaled=data.loc[data["Class"]==1]
 non_fraud_scaled=data.loc[data["Class"]==0]
@@ -4727,12 +4709,12 @@ non_fraud_scaled=data.loc[data["Class"]==0]
 # Randomly selecting 492 different observation from non-fraud transactions without replacement.
 sub_samp_non_fraud=non_fraud_scaled.sample(n=492, replace=False)
 
-
 # Concataneting two dataframe.
 frames=[fraud_scaled,sub_samp_non_fraud]
 subsampled_data=pd.concat(frames)
 ```
 
+Let's check class imbalanced for controlling.
 ```python
 # Class Balance after subsampling and outlier removal.
 print("Number of non-fraduelent transaction:",subsampled_data.loc[data.Class == 0, 'Class'].count())
@@ -8699,9 +8681,10 @@ corr.style.background_gradient(cmap='coolwarm',axis=None).set_precision(2)
 
 * V2, V4 and V11 are highly correlated as it can be observed in correlation matrix of subsampled dataset.
 * V14, V12, V10 are the ones with least correlated features.
-* As these feautures have the most impact on class label of the dataset, I'm going to detect outliers within these features and remove them.
+* As these features have the **most impact on class label** of the dataset, I'm going to **detect outliers within these features and remove them.**
 
 
+Let's plot **boxplots** of these features to visualize outliers.
 ```python
 # Plotting positively correlated features.
 f, axes = plt.subplots(ncols=3, figsize=(20,6))
@@ -8720,14 +8703,7 @@ axes[2].set_title('V11-Positive Class Correlation')
 
 
 
-
-    Text(0.5, 1.0, 'V11-Positive Class Correlation')
-
-
-
-
-![png](output_45_1.png)
-
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_45_1.png" alt="">
 
 
 ```python
@@ -8745,34 +8721,32 @@ axes[2].set_title('V10-Negative Class Correlation')
 ```
 
 
-
-
-    Text(0.5, 1.0, 'V10-Negative Class Correlation')
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_46_1.png" alt="">
 
 
 
 
-![png](output_46_1.png)
+Now, I need to choose **threshold for determining which observation is outlier.** As our features are **Gaussian or Gaussian-like distributed,** I use **standard deviation as threshold measure** and find observations that lie outside of **this particular sd value,** then removed those observations.
 
+Standard deviation is a statistical measure (metric of variance) explaining how much each observation is spread out from mean.
 
-Now, I need to choose threshold for determining which observation is outlier. As our features are Gaussian or Gaussian-like distributed, I used standart deviation as threshold measure and find observations that lie outside of this particular sd value, then removed those observations.
+![image-center]({{ site.url }}{{ site.baseurl }}/images/bell_curve.png){: .align-center}
 
 
 ```python
-# Mean and standart deviation of most and least correlated features.
-
+# Mean and standard deviation of most and least correlated features.
 def outlier_detector(data,feature_name, sd_value):
     """This function detects outliers of dataset in the structure of pandas dataframe
     and finally removes them and then prints how many outlier detected
     under the assumption of Gaussian distributed feautures."""
 
-    # Mean and standart deviation calculation.
+    # Mean and standard deviation calculation.
     mean=data[feature_name].mean()
-    standart_dev=data[feature_name].std()
-    print("Feature:%s" %feature_name, "Mean:%.3f"% mean, "Standart Deviation:%.3f" % standart_dev)
+    standard_dev=data[feature_name].std()
+    print("Feature:%s" %feature_name, "Mean:%.3f"% mean, "Standard Deviation:%.3f" % standard_dev)
 
     # Threshold settings.
-    threshold= standart_dev * sd_value
+    threshold= standard_dev * sd_value
     lower, upper = mean - threshold, mean + threshold
     outlier = [value for value in data[feature_name]if value <lower or value > upper]
 
@@ -8786,9 +8760,9 @@ def outlier_detector(data,feature_name, sd_value):
     return data
 ```
 
-* One can adjust the sd value for outlier removal and model comparison section. Currently, I move forward with SD=3
+* One can **adjust the sd value** for outlier removal and model comparison section. Currently, I move forward **with SD=3**
 * I'm going to check how many observation lay out of the **SD value 3** that accout for **99.7% of the whole data.**
-* To check, SD observation coverage approach: 68-95-99 rule: https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule
+* To check, SD observation coverage approach: **68-95-99 rule:** https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule
 
 
 ```python
@@ -8800,18 +8774,19 @@ for values in features:
     subsampled_data=outlier_detector(subsampled_data,values,3)
 ```
 
-    Feature:V10 Mean:-2.828 Standart Deviation:4.553
+    Feature:V10 Mean:-2.828 Standard Deviation:4.553
     Identified outliers: 16
     968
-    Feature:V12 Mean:-3.003 Standart Deviation:4.507
+    Feature:V12 Mean:-3.003 Standard Deviation:4.507
     Identified outliers: 15
     953
-    Feature:V14 Mean:-3.264 Standart Deviation:4.427
+    Feature:V14 Mean:-3.264 Standard Deviation:4.427
     Identified outliers: 2
     951
 
+Finally, I eliminated outliers that I detected from each feature to **avoid models to perform badly** and **boost model generalization.**
 
-### Visualizing Undersampled Dataset via Principal Component Analysis
+### Principal Component Analysis
 
 
 ```python
@@ -8821,21 +8796,12 @@ x=subsampled_data.iloc[:,0:30]
 # Separating target
 y=subsampled_data.iloc[:, 30:31]
 y["Class"] = y.Class.astype(int)
-#y=y.values.ravel()
-
 ```
 
-    C:\Users\mesut\.conda\envs\tensor-flow-gpu\lib\site-packages\ipykernel_launcher.py:6: SettingWithCopyWarning:
-    A value is trying to be set on a copy of a slice from a DataFrame.
-    Try using .loc[row_indexer,col_indexer] = value instead
-
-    See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-
-
-
+Let's apply **Principal Component Analysis** on under-sampled data to **map high dimensional data into 2-dimensional data.** In this way, I will be able to **visualize all observations** on cartesian coordinate system.
 
 ```python
-# Applying PCA on undersampled and outlier-free observations to check whether dataset is linearly seperable.
+# Applying PCA on under-sampled and outlier-free observations to check whether dataset is linearly seperable.
 
 pca = PCA(n_components=2, random_state=157)
 principalComponents = pca.fit_transform(x.values)
@@ -8873,7 +8839,6 @@ plt.legend(loc=0,fontsize=10,markerscale=2.5)
 
 
 
-    <matplotlib.legend.Legend at 0x226af6cb978>
 
 
 
@@ -8905,7 +8870,7 @@ predictor(models, x=x, y=y)
 ![png](output_54_2.png)
 
 
-### Grid Search on Linear SVM,  Kernelized SVM and Logistic Regression for Hyperparameter Tunning
+### Grid Search Hyperparameter Tunning
 
 
 ```python

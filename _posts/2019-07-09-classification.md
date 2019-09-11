@@ -338,7 +338,7 @@ plt.title("Amount of Non-Fraud Transantion in $")
 </figure>
 
 
-To be able to compare, let's restrict the amount of transaction.
+To be able to compare, let's restrict the amount of transaction to $850.
 
 
 ```python
@@ -361,13 +361,11 @@ plt.title("Distribution of Amount of Non-Fraud Transantion in $")
 </figure>
 
 
-
 Fraud transactions do not follow certain distribution but distribution of **non-fraud transactions has positive skewness.**
 
-
+As all other features are scaled with PCA, let's scale the Amount and Time features as well.
 
 ```python
-# As all other features are scaled with PCA, let's scale the Amount and Time Features as well.
 robust_scaler = RobustScaler()
 
 converted_column=data["Amount"].values.astype(float).reshape(-1,1)
@@ -4532,14 +4530,16 @@ y2["Class"] = y2.Class.astype(int)
 For this project, I defined a function called **predictor** that computes predictions for each model,  plots all four performance metrics along with confusion matrix and also finally draws Receiver Operating Characteristics (ROC) Curve and computes Area Under Curve score of models.
 
 You may find this function on github page of project.
+link: https://github.com/ceylanmesut/Machine-Learning-Project-Fraud-Detection/blob/master/predictor_function.ipynb
+
 
 ```python
 predictor(models, x, y):
 ```
 
 
+Let's define machine learning models with pre-defined hyperparameters.
 ```python
-# All models
 clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=1.0, kernel='linear',gamma='auto_deprecated')}],
      {'label':'Kernelized SVM', 'model':svm.SVC(C=10.0, kernel='poly', degree=2,gamma='auto_deprecated')},
      {'label':'Logistic Regression','model':LogisticRegression(C=10, max_iter=1000,penalty= 'l2',solver= 'lbfgs')},
@@ -4548,9 +4548,20 @@ clfs=[{'label': 'Linear SVM', 'model':svm.SVC(C=1.0, kernel='linear',gamma='auto
 predictor(clfs, x=x2, y=y2)
 ```
 
-BU KISMA BIR GRAFIK GELECEK.
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_14_1.png" alt="">
 
-Even though models depict very high accuracy score, in class imbalance cases, accuracy is not a good metric and should not be considered because minor class, (fraud transactions) does not contribute empirical risk. Therefore, we can easily obtain high accuracy score by prediction non-fraud transactions as non-fraud transactions. So, I need to focus on F1 score which is combination of Recall and Precision to measure my model success.
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_14_2.png" alt="">
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_14_3.png" alt="">
+
+
+Even though all models depict very **high accuracy score**, in class imbalance cases, **accuracy is not a good metric** and should not be considered because minor class, (fraud transactions) does not contribute empirical risk.
+
+Therefore, we can easily obtain high accuracy score by prediction non-fraud transactions as non-fraud transactions. So, I need to **focus on F1 score** which is combination of Recall and Precision to measure my model success.
+
+As an outcome of the model, I expect to obtain perfect balance between Precision and Recall since it is crucial for bank to accurately classify fraud transactions in the mean time not blocking non-fraud transactions as fraud transaction.
+
+One can observe from confusion matrices that the best performing model is **Linear SVM with %80 F1 score**, classifying 378 fraud cases out of 492. However, the model wrongly  classifies 114 fraud transactions as non-fraud and 70 non-fraud transactions as fraud transactions.
 
 
 ## 2. Combat with Imbalanced Dataset

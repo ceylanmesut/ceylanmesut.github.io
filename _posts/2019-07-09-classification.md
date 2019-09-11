@@ -4546,18 +4546,21 @@ Linear SVM with L2 Penalizer (lambda)
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss.png" alt="">
 
 
-I also used kernel trick on SVM model to generate more flexible model to fit the dataset. Therefore,  I use Polynomial Kernel on SVM with degree 2.
+I use kernel trick on SVM model to generate more flexible model to fit the dataset with non-linear decision boundary. Therefore,  I use Polynomial Kernel on SVM with degree 2.
 
 * **Kernel Trick:** Need for kernel trick arises from finding non-linear decision boundaries to fit the data better way. Kernel trick operates higher dimensional feature spaces without explicitly computing transformation of feature vectors. This trick lies on computing inner products of observations as following:
 
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/kernel_trick.png" alt="">
 
-With the kernel trick, one can form more flexible SVM models depending on kernel type that being used.
 
 SVM with kernel trick:
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss_kernelized.png" alt="">
+
+As one can observe different effect of increasing degree of polynomial of kernel function, **higher the degree of polynomial more flexible decision boundary** that we will get.
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_K.png" alt="">
 
 Let's define machine learning models with pre-defined hyperparameters.
 

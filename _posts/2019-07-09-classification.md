@@ -4586,7 +4586,9 @@ Specifically, Gaussian Naive Bayes model is designed for dataset that **consists
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/GNB.png" alt="Taken from Chris Albon">
 
-
+<figure class="half">
+    <a href="/images/output_15_1.png"><img src="/images/GNB.png"></a>
+</figure>
 
 As brief model introduction is completed, let's continue with **calling predictor function and start making classification.**
 
@@ -4617,11 +4619,13 @@ Even though all models depict very **high accuracy score**, in class imbalance c
 
 Therefore, we can **easily obtain high accuracy score by predicting non-fraud transactions correctly.** So, I need to **focus on F1 score** which is combination of **Recall and Precision** to measure my model success.
 
+
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/cf_matrix.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/acc.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/f1.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/recall.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/precision.png" alt="">
+
 
 As an outcome of the model, I expect to obtain perfect balance between Precision and Recall since it is crucial for bank to accurately classify fraud transactions in the mean time not blocking non-fraud transactions as fraud transaction.
 

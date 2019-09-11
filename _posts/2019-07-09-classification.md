@@ -4542,7 +4542,7 @@ predictor(models, x, y):
 Support Vector Machine is  classifier that can be used in supervised learning problems. Model utilizes algorithms to generate hyperplane which separate each class observations to classify them. Optimal hyperplane is a line on two dimensional space whereas it is plane in multi dimensional space. SVM uses below loss function.
 
 
-Linear SVM with L2 Penalizer (lambda)
+Linear SVM with L2 Penalizer ||w||2 with lambda parameter
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss.png" alt="">
 
 
@@ -4558,10 +4558,30 @@ SVM with kernel trick:
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_Loss_kernelized.png" alt="">
 
-As one can observe different effect of increasing degree of polynomial of kernel function, **higher the degree of polynomial more flexible decision boundary** that we will get.
+One can observe different effect of increasing degree of polynomial of kernel function, **higher the degree of polynomial more flexible decision boundary** that we will get. However, higher degree polynomial kernels **bring risk of over fitting** the data.
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_K1.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/SVM_K2.png" alt="">
+
+
+### **Logistic Regression**
+
+Logistic Regression is a linear classification model that part of  probabilistic models. Logistic Regression is the model can be used in binary classification problems due to its logistic function. It computes class probabilities and chooses best weights to maximize log-likelihood or minimize logistic loss function.
+
+Logistic Function:
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/log_func.png" alt="">
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/log_thr.png" alt="">
+
+One can observe that logistic regression classifies class labels according to computed probabilities of each observation. Observations above threshold are classified as one class label and below ones get other class label.
+
+In my model, I use Logistic Regression model with Gaussian prior (L2 penalizer) to regularize model complexity. L2 regularizer penalizes large coefficients to go extreme or deep dive to zero.
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/log_loss.png" alt="">
+
+### **Gaussian Naive Bayes**
+
+
 
 Let's define machine learning models with pre-defined hyperparameters.
 

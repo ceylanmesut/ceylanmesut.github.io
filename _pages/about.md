@@ -2,7 +2,7 @@
 title: "About"
 permalink: /about/
 header:
-  image: "/images/cover_photo.jpg"
+  image: "/images/zurich2.jpg"
 ---
 
 Hi there! I'm **Mesut Ceylan** and I'm a **machine learning engineer.**

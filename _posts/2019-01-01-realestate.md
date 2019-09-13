@@ -218,6 +218,8 @@ a['district_name']= np.where((a['post_code'] == "8051"), "Schwamendingen", a['di
 
 # extracting clean data to csv file
 a.to_csv("zurich_main2_clean.csv", index=False, encoding="ISO-8859-1", sep=',')
-``` python
+``` 
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/real_estate_project/Dashboard.png" alt="">
+
+

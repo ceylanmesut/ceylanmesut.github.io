@@ -26,6 +26,8 @@ Purpose of this project to generate **web scraping**  codes to scrap one of the 
 * Clean data is also **mapped into geospatial domain** to provide deeper understanding about districts of Zurich.
 * Final dashboard reflects insights about **685 rent post of the website within the scope of Zürich location by January 2019.**
 
+
+### Web Scraping Code
 ``` python
 ##  Webscraping Process
 # importing necessary libraries for web scraping
@@ -114,7 +116,7 @@ f.close()
 ```
 So far so good. I am able to iterate over **each post available on website** and **scrap data** into csv file. Next step is cleaning data to make it available for **visualization purposes.**
 
-# Data Cleansing and Preparation for Tableau Visualization
+### Data Cleansing and Preparation for Tableau Visualization
 ``` python
 # transforming data into pandas dataframe
 import pandas as pd

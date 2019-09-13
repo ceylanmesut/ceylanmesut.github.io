@@ -218,8 +218,16 @@ a['district_name']= np.where((a['post_code'] == "8051"), "Schwamendingen", a['di
 
 # extracting clean data to csv file
 a.to_csv("zurich_main2_clean.csv", index=False, encoding="ISO-8859-1", sep=',')
-``` 
+```
+## Results
+
+At the end of the visualization, it is time to express my observations and insights that I got from dataset.
+
+* As one can expect, **old city and surrounding districts** are the more expensive than periphery districts. Specifically, the most expensive districts are **Enge, Altstadt and Hottingen.**
+* **The least expensive district is Oerlikon** at the time of the analysis **followed by Wipkingen and Alt-Wiedikon.**
+* Generally, **Apartment property type** is **the most common type** that individuals desire to rent out (419 posts). Also Furnished Apartment posts are very common in Oerlikon, Wipkingen Riesbach.
+*  In terms of number of rooms, posts mostly gather around 1-room, 2.5-room and 3.5-room rentals.
+* Not suprisingly, box plots tell us that **higher the # of rooms, the higher the rents.**
+*  Yet, one can observe **intersection** between **2.5-room, 3-room and 3.5-room rent prices.** Therefore, **there is opportunity** to rent out b**igger place with equal amount of rent cost that of smaller place** if **location** is **flexible.**
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/real_estate_project/Dashboard.png" alt="">
-
-

@@ -8755,14 +8755,14 @@ def outlier_detector(data,feature_name, sd_value):
                                          (data[feature_name] > upper)].index)
 
     print('Identified outliers: %d' % len(outlier))
-    print(len(data))
-
+    print(len(data)
     return data
 ```
 
 * One can **adjust the sd value** for outlier removal and model comparison section. Currently, I move forward **with SD=3**
 * I'm going to check how many observation lay out of the **SD value 3** that accout for **99.7% of the whole data.**
-* To check, SD observation coverage approach: **68-95-99 rule:** https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule
+* To check, SD observation coverage approach: **68-95-99 rule:**
+Link: https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule
 
 
 ```python
@@ -8787,7 +8787,7 @@ for values in features:
 Finally, I eliminated outliers that I detected from each feature to **avoid models to perform badly** and **boost model generalization.**
 
 ### Principal Component Analysis
-
+ Principal Component Analysis is a technique that can be used for **visualizing high dimensional data, regularization (model selection) and unsupervised feature discovery.** It is mathematical method that transforms correlated variables into non-correlated variables called principal components. It allows us to ***compress dataset with most of the variability of original data.** This method is based on ***orthogonal linear transformation** that transforms data into cartesian coordinate system with maximum variance components (max. variance exists first principal component).
 
 ```python
 # Separating features
@@ -8808,7 +8808,6 @@ principalComponents = pca.fit_transform(x.values)
 
 principal_df = pd.DataFrame(data = principalComponents
              , columns = ['principal component 1', 'principal component 2'])
-
 # Resetting the y index.
 y=y.reset_index(drop=True)
 
@@ -8837,45 +8836,41 @@ plt.legend(loc=0,fontsize=10,markerscale=2.5)
 ```
 
 
+![image-center]({{ site.url }}{{ site.baseurl }}/images/output_53_1.png){: .align-center}
 
 
+What we can observe here is that fraud transactions are **clustered in certain section** in cartesian coordinate system. Therefore, we can tackle the challenge with **linear classifiers.**
 
 
-
-
-![png](output_53_1.png)
-
-
-
+Let's test our models to generate first results then optimize them with hyperparameter tuning.
 ```python
-# Testing 4 classifiers on undersampled dataset without hyperparameter tunning.
+# Testing 4 classifiers on under-sampled dataset without hyperparameter tuning.
 models=[{'label': 'Linear SVM', 'model':svm.SVC(kernel="linear")},
             {'label':'Kernelized SVM', 'model':svm.SVC(kernel="poly", degree=2)},
             {'label':'Logistic Regression','model':LogisticRegression()},
         {'label':'Gaussian Naive Bayes','model':GaussianNB()}]
 
-
 predictor(models, x=x, y=y)
 ```
 
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_54_0.png" alt="">
 
-![png](output_54_0.png)
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_54_1.png" alt="">
 
-
-
-![png](output_54_1.png)
-
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/output_54_2.png" alt="">
 
 
-![png](output_54_2.png)
 
+Results are not bad at all. After **outlier removal and under-sampling,** almost all of my models perform way better. Kernelized SVM outperforms all other models with highest F1 score, %93. This model is able to classify 409 fraudulent transactions correctly out of 492. However, it fails to classify 51 fraudulent transactions.
 
-### Grid Search Hyperparameter Tunning
+One also can observe that **Kernelized SVM** is the **best model with %93.5 AUC score.**
 
+For model parameter optimization I defined **grid_search_plotter** function which benefits from **GridSearchCV** of sklearn.
 
+Let's define the function first.
+### Grid Search Hyperparameter Tuning
 ```python
-# Defining GridsearchCV Function for hyperparameter tunning.
-
+# Defining GridsearchCV Function for hyperparameter tuning.
 def grid_search_plotter(models,grid_search_values,x,y):
     """This function computes GridSearchCV values of the models and finds the best model parameters. Finally it plots
     model performance metrics."""
@@ -8889,7 +8884,6 @@ def grid_search_plotter(models,grid_search_values,x,y):
 
     # Computing gridsearchcv predictions.
     grid_cv_predictions=[]
-
     print("Best Parameters Choosen")
     print("-----------------------")
     for m, grid_values in zip(models, grid_search_values):# modeli ve grid degerlerini kullanıcı saglayacak.
@@ -8913,18 +8907,14 @@ def grid_search_plotter(models,grid_search_values,x,y):
     fig.suptitle("Performance Metrics", fontsize=14, x=0.6, y=1.05)
     labels=np.unique(y)
     i=1
-
     for measure, metric_title in zip(eva_metrics, eva_metric_titles):
-
         plt.subplot(2,2,i,frameon=True)
         plt.title(metric_title)
-
         xa=np.arange(len(model_titles))
         ya=[]
 
         for c in range(len(grid_cv_predictions)):
             ya.append(measure(y,grid_cv_predictions[c]))
-
         plt.barh(xa,ya, color='tab:blue', edgecolor=None)
         plt.yticks(xa, model_titles)
         plt.xticks([])
@@ -8933,11 +8923,9 @@ def grid_search_plotter(models,grid_search_values,x,y):
 
         u=-0.1
         for c in range(len(grid_cv_predictions)):
-
             model=("{0:.2f}".format(measure(y, grid_cv_predictions[c])))
             plt.text(0.35,(0.0+float(u)),s=model,fontsize=11,color="white")
             u +=1.0      
-
         plt.tight_layout()
     plt.show()   
 
@@ -8949,11 +8937,8 @@ def grid_search_plotter(models,grid_search_values,x,y):
         fig2 = plt.figure(figsize=(12,3),edgecolor="b",frameon=True)#if there are more than two graphs.
 
     fig2.suptitle("Confusion Matrices", fontsize=14, x=0.47, y=1.05)
-
-
     f=1
     for k, h in zip(grid_cv_predictions, model_titles):
-
         if len(models) < 4:
             plt.subplot(1,len(models),f,frameon=True)
         else:
@@ -8964,15 +8949,11 @@ def grid_search_plotter(models,grid_search_values,x,y):
         df = pd.DataFrame(frame, columns=['y','y_predicted'])
         confusion_matrix = pd.crosstab(df['y'], df['y_predicted'],
                                        rownames=['True Label'], colnames=['Predicted Label'], margins = False)
-
         sns.heatmap(confusion_matrix,annot=True,fmt="d",cmap="Blues",linecolor="blue",
                     vmin=0,vmax=500)
-
         fig2.tight_layout()
         f +=1
-
     fig3 = plt.figure(figsize=(12,6),edgecolor="b",frameon=True)
-
     for v, m in zip(grid_cv_predictions, models):
 
         # Computing FPR and TPR
@@ -8989,14 +8970,13 @@ def grid_search_plotter(models,grid_search_values,x,y):
         plt.ylabel('Sensitivity(True Positive Rate)', fontsize=14)
         plt.title('ROC Curve', fontsize=18)
         plt.legend(loc="lower right",fontsize=11)
-
     plt.show()
 ```
 
+Then now, let me  **models and hyperparameters** that I want to **optimize.** My function will help me to **search through all these parameters and print out the best hyperparameters.**
 
 ```python
 #Definning hyperparameters for each model.
-
 clfs=[{'label': 'Linear SVM', 'model':svm.SVC()},
             {'label':'Kernelized SVM', 'model':svm.SVC()},
             {'label':'Logistic Regression','model':LogisticRegression()},
@@ -9009,7 +8989,6 @@ hyperparameters=[{"kernel":["linear"],"gamma":["auto_deprecated"],
                 {'penalty': ['l2'],"max_iter":[1000],'solver':['lbfgs'],
                 'C':[0.001,0.005,0.01,0.03,0.05,0.07,0.09,0.1,0.3,0.5,0.7,0.9,2.0,5.0,10.0]},
                  {'var_smoothing':[1e-13,1e-12,1e-11,1e-10,1e-09,1e-08,1e-07,1e-06,1e-05]}]
-
 grid_search_plotter(models=clfs,grid_search_values=hyperparameters,x=x,y=y)
 ```
 
@@ -9033,11 +9012,6 @@ grid_search_plotter(models=clfs,grid_search_values=hyperparameters,x=x,y=y)
 
 
 
-After hyperparameter tunning, all models have increased AUC score especially, SVM with polynomial kernel. On balanced dataset, Kernelized SVM outperforms all other models with its F1 and AUC scores, 0.98 and 0.984 respectively.
+After hyperparameter tuning, all models have **increased AUC** score especially, SVM with polynomial kernel. On balanced dataset, **Kernelized SVM outperforms** all other models with its F1 and AUC scores, 0.98 and 0.984 respectively.
 
-As further development of the project, one can use Artificial Neural Network on imbalanced dataset and Decision Tree methods to discover different models and their result on the challenge.
-
-
-```python
-
-```
+As further development of the project, one can use **Artificial Neural Network** on imbalanced dataset and **Decision Tree** methods to discover different models and their result on the challenge.

@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Data Science Portfolio"
+title                    : "My Portfolio Page"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Mesut Ceylan"
@@ -109,7 +109,7 @@ analytics:
 author:
   name             : "Mesut Ceylan"
   avatar           : "/images/profil_photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Data Scientist"
+  bio              : "Machine Learning Engineer"
   location         : "Zurich | Switzerland"
   email            :
   linkedin: https://www.linkedin.com/in/mesutceylan/
@@ -289,8 +289,8 @@ defaults:
     values:
       layout: single
       author_profile: true
-      #read_time: false
-      comments: # true
+      read_time: true
+      comments:  true
       share: true
       related: true
  

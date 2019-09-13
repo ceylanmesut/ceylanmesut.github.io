@@ -1,10 +1,10 @@
 ---
-title: "Credit Card Fraud Detection"
+title: "Zurich Real Estate Market"
 date: 2019-09-10
-tags: [Machine Learning]
+tags: [Data Science]
 header:
  image: "/images/credit_cards.jpg"
-excerpt: "Credit card fraud detection machine learning project."
+excerpt: "Data Science and Web Scraping Project on Zurich Real Estate Market."
 
 toc: true
 toc_label: " On This Page"
@@ -12,34 +12,20 @@ toc_icon: "file-alt"
 toc_sticky: true
 ---
 ## Introduction
-Fundamental challenge of this machine learning project is to create a machine learning model that able to **predict fraudulent credit card transactions** from non-fraduelent ones. From machine learning perspective, fraud transactions are labeled as 1s and non-fraud transactions are labeled as 0s. Therefore, it is **binary classification problem.**
 
-In this project, I'm going to benefit from fundamental classification models from two different categories: probabilistic and non-probabilistic machine learning models. First, I conduct **explanatory data analysis** to better understand data and make decision about my steps. Secondly, I use **four different models on imbalanced dataset** and observe model results. Lastly, I introduce methods for **fight with class imbalance and optimizing the models** for maximum model outcome.
+Purpose of this project to generate **web scraping**  codes to scrap one of the biggest real estate website of Switzerland, **comparis.ch,** to gain deeper **insights about Zürich Rental Real Estate Market.**
 
-* **Dataset**: Kaggle dataset that anonymized credit card transactions labeled as fraudulent or genuine
-
-
-* **Inspiration**: Identifying fraudulent credit card transactions.
-
-
-* **Problem Definition**: Building binary classification models to classify fraud transactions to obtain high AUC and F1 score.
-
-
-* **Link**: https://www.kaggle.com/mlg-ulb/creditcardfraud
-
+* **Dataset**: Named as Zurich_Real_Estate_Final.csv, generated with web scraping.
+* **Inspiration**: Gain insights about Zürich real estate market.
 
 ## Approach
-* **0.Explanatory Data Analysis**: Understanding the dataset and generating deeper insight.
 
+* Project initiates with **python code to connect the website,** iterate over relevant 100 pages, gather data and write over csv file.
+* Later on, design python code conducts **data cleansing and processing steps** to **prepare data for visualization purposes.**
+* Then, clean data is processed within one of the **top visualization software, Tableau,** to generate insight dashboard.
+* Clean data is also **mapped into geospatial domain** to provide deeper understanding about districts of Zurich.
+* Final dashboard reflects insights about **685 rent post of the website within the scope of Zürich location by January 2019.**
 
-* **1.Models Againts Imbalanced Dataset**: Analyzing model behaviors against class imbalance.
-
-
-* **2. Combat with Imbalanced Dataset**: Combating with imbalanced dataset with under-sampling and cost sensitive loss function methods.
-
-## Models
-* **Probabilistic Models**:  Logistic Regression and Gaussian Naive Bayes.
-* **Non-Probabilistic Models**: Linear Support Vector Machine and Kernelized Support Vector Machine (Polynomial Kernel)
 
 
 ```python

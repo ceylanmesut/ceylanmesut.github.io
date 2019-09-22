@@ -13,43 +13,42 @@ toc_sticky: true
 ---
 
 ## Introduction
-Fundamental challenge of this machine learning project is to create a machine learning model that able to **predict fraudulent credit card transactions** from non-fraduelent ones. From machine learning perspective, fraud transactions are labeled as 1s and non-fraud transactions are labeled as 0s. Therefore, it is **binary classification problem.**
+Main idea of this project is to successfully classify intel landscape image dataset. This dataset consists of 6 different landscapes namely; **buildings, streets, glaciers, forests, deserts and XX** and I'm going to use **Convolutional Neural Networks (CNN)** machine learning method to classify these images **as fast as and as accurate as possible.**
 
-In this project, I'm going to benefit from fundamental classification models from two different categories: probabilistic and non-probabilistic machine learning models. First, I conduct **explanatory data analysis** to better understand data and make decision about my steps. Secondly, I use **four different models on imbalanced dataset** and observe model results. Lastly, I introduce methods for **fight with class imbalance and optimizing the models** for maximum model outcome.
-
-* **Dataset**: Kaggle dataset that anonymized credit card transactions labeled as fraudulent or genuine
-
-
-* **Inspiration**: Identifying fraudulent credit card transactions.
+Convolutional Neural Network is **special type of Artificial Neural Network (ANN)** structure.
+What separates Convolutional Neural Networks from Artificial Neural Networks is state of art structure of **CNN that is specifically created for image classification and related tasks.** Unlike ANN's fully connected network structure, **Cluster of Convolutional Layers is the core of CNN.** and it is the main engine to squeeze the images into processable size and structure. Not surprisingly, this unique structure boosts computational capability of CNN during image classification tasks when it compared to ANN.
 
 
-* **Problem Definition**: Building binary classification models to classify fraud transactions to obtain high AUC and F1 score.
+* **Dataset**: Intel image dataset includes 6 different landscape images with 150x150 size.
 
 
-* **Link**: https://www.kaggle.com/mlg-ulb/creditcardfraud
+* **Inspiration**: Accurately classify as much as image possible with robust machine learning.
+
+
+* **Problem Definition**: Building Convolutional Neural Network model to obtain high accuracy.
+
+
+* **Link**: https://www.kaggle.com/puneet6060/intel-image-classification
 
 
 ## Approach
-* **0.Explanatory Data Analysis**: Understanding the dataset and generating deeper insight.
+* **0.Explanatory Data Analysis**: Understanding the dataset and check class imbalance.
 
 
-* **1.Models Againts Imbalanced Dataset**: Analyzing model behaviors against class imbalance.
+* **Convolutional Neural Network**: Creating **CNN model** for the problem.
 
 
-* **2. Combat with Imbalanced Dataset**: Combating with imbalanced dataset with under-sampling and cost sensitive loss function methods.
+* **Hyperparameter Tuning**: Optimizing **hyperparameters** of the CNN model to achieve better results.
 
 ## Models
-* **Probabilistic Models**:  Logistic Regression and Gaussian Naive Bayes.
-* **Non-Probabilistic Models**: Linear Support Vector Machine and Kernelized Support Vector Machine (Polynomial Kernel)
-
-
-
-
+* **CNN**:  **Variants of CNN** models.
 
 
 ### Web Scraping Code
-``` python
 
+Let's load necessary packages.
+
+``` python
 # Import necessary libraries and packages
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
@@ -73,9 +72,12 @@ import os
 from keras.optimizers import Adam
 from random import randint
 
+# Defining paths to tranning and test images.
 TRAIN_PATH = "../input/seg_train/seg_train/"
 TEST_PATH = "../input/seg_test/seg_test/"
 ```
+
+So far so good. Next, let's **discover image categories** by their percentage distributions.
 ``` python
 # Exploratory analysis
 def explore_categories(path):
@@ -111,11 +113,10 @@ def explore_categories(path):
 
 
 def pie_chart_generate(percentages, labels, title):
-
+  """This function generates pie charts of given class labels."""
     # Defining color map for pie chart.
     cmap = plt.get_cmap("tab20c")
     outer_colors = inner_colors = cmap(np.array([1, 2, 5, 6, 9, 10]))
-
 
     fig, ax = plt.subplots()
     ax.set_title(title)
@@ -139,10 +140,17 @@ print("Number of testing images: " + str(number_testing_images))
 print("Number of images for prediction: " + str(len(os.listdir("../input/seg_pred/seg_pred/"))))
 ```
 
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/pie1.png){: .align-left}
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/pie2.png){: .align-center}
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/pie3.png){: .align-right}
+
+Well, clearly there is **no class imbalance on both training and test images** so it is good news. Also we can see that we have **high amount of training images** and low amount of test images so that I need to be careful with **overfitting of the model.**
+
+Next, let's load the data from paths that I defined and shuffle data.
 
 ``` python
 #Preprocess data
-def load_data(path, image_size=100):
+def pre_process(path, image_size=100):
     """This function loads, resizes, standardizes and shuffles all images."""
     data = []
     labels = []
@@ -182,16 +190,21 @@ def load_data(path, image_size=100):
     return data, labels
 ```
 
+Let's load the data.
+
 ```python
-# Load data
-train_data, labels = load_data(TRAIN_PATH, image_size=100)
+# Loading data
+train_data, labels = pre_process(TRAIN_PATH, image_size=100)
 ```
+
+Let's assign class labels to each image and plot some of them to check the assign labels.
 
 ```python
 def get_classlabel(class_code):
+  """This function assign class label text on every image according  to their type."""
     labels = {2:'glacier', 4:'sea', 0:'buildings', 1:'forest', 5:'street', 3:'mountain'}  
     return labels[class_code]
-
+# Plotting images with class labels.
 f,ax = plt.subplots(3,3)
 f.subplots_adjust(0,0,3,3)
 for i in range(0,3,1):
@@ -203,10 +216,11 @@ for i in range(0,3,1):
 ```
 
 
-FOTOGRAFLAR MESELA
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/cl_images.png" alt="">
 
+AAAAAA
 ``` python
-# Construct model
+# Constructing Convolutional Neural Network Model
 def cnn_model():
     """function description"""
 
@@ -231,7 +245,6 @@ def cnn_model():
 
     model.compile(optimizer=Optimizer.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0, amsgrad=False),
                   loss='sparse_categorical_crossentropy',metrics=['accuracy'])
-
     return model
 ```
 
@@ -285,7 +298,7 @@ model_fit(model, number_epochs,batch_size)
 
 
 
-
+``` python
 def make_prediction():
     # Prediction on testing set
     test_images,test_labels = load_data('../input/seg_test/seg_test/')
@@ -302,3 +315,4 @@ def make_prediction():
 
     sn.heatmap(confusion_matrix,annot=True,fmt="d",cmap="Blues",linecolor="blue", vmin=0,vmax=500)
     plt.title('Confusion Matrix', fontsize=16)
+```

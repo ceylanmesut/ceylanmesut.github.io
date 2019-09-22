@@ -140,9 +140,11 @@ print("Number of testing images: " + str(number_testing_images))
 print("Number of images for prediction: " + str(len(os.listdir("../input/seg_pred/seg_pred/"))))
 ```
 
-![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/pie1.png){: .align-left}
-![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/pie2.png){: .align-center}
-![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/pie3.png){: .align-right}
+
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/pie1.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/pie2.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/pie3.png" alt="">
 
 Well, clearly there is **no class imbalance on both training and test images** so it is good news. Also we can see that we have **high amount of training images** and low amount of test images so that I need to be careful with **overfitting of the model.**
 
@@ -216,8 +218,8 @@ for i in range(0,3,1):
 ```
 
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/cl_images.png" alt="">
 
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cl_images.png.png){: .align-center}
 AAAAAA
 ``` python
 # Constructing Convolutional Neural Network Model

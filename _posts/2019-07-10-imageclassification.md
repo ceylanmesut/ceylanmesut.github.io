@@ -370,6 +370,7 @@ Trainable params: 6,412,422
 Non-trainable params: 0
 _________________________________________________________________
 ```
+
 ```python
 Train on 10525 samples, validate on 3509 samples
 Epoch 1/15
@@ -404,11 +405,206 @@ Epoch 15/15
 10525/10525 [==============================] - 15s 1ms/sample - loss: 0.1574 - acc: 0.9457 - val_loss: 0.7745 - val_acc: 0.8145
 Runtime: 108304.077418699
 ```
-![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/m1_acc.png){: .align-center}
-![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/m1_loss.png){: .align-center}
+
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m1_acc.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m1_loss.png" alt="">
 
 ```python
 3000/3000 [==============================] - 2s 508us/sample - loss: 0.7719 - acc: 0.8067
 ```
+COMMENTS ABOUT IT
+
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cm_1.png){: .align-center}
+
+Let's increase the batch size.
+
+```python
+# Second Prediction
+model=cnn_model()
+number_epochs=15
+batch_size=128
+
+model_fit(model, number_epochs,batch_size)
+```
+
+
+```python
+Train on 10525 samples, validate on 3509 samples
+Epoch 1/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 1.3919 - acc: 0.4217 - val_loss: 1.0312 - val_acc: 0.5919
+Epoch 2/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 1.0348 - acc: 0.5850 - val_loss: 0.8856 - val_acc: 0.6669
+Epoch 3/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.9198 - acc: 0.6383 - val_loss: 0.7974 - val_acc: 0.6948
+Epoch 4/15
+10525/10525 [==============================] - 13s 1ms/sample - loss: 0.8045 - acc: 0.6896 - val_loss: 0.6988 - val_acc: 0.7378
+Epoch 5/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.6838 - acc: 0.7540 - val_loss: 0.6444 - val_acc: 0.7729
+Epoch 6/15
+10525/10525 [==============================] - 13s 1ms/sample - loss: 0.6175 - acc: 0.7853 - val_loss: 0.5669 - val_acc: 0.7968
+Epoch 7/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.5610 - acc: 0.8050 - val_loss: 0.5511 - val_acc: 0.8019
+Epoch 8/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.4851 - acc: 0.8310 - val_loss: 0.5007 - val_acc: 0.8236
+Epoch 9/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.4219 - acc: 0.8548 - val_loss: 0.4971 - val_acc: 0.8287
+Epoch 10/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.3871 - acc: 0.8620 - val_loss: 0.4914 - val_acc: 0.8321
+Epoch 11/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.3481 - acc: 0.8775 - val_loss: 0.5058 - val_acc: 0.8213
+Epoch 12/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.2962 - acc: 0.8966 - val_loss: 0.4866 - val_acc: 0.8427
+Epoch 13/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.2715 - acc: 0.9031 - val_loss: 0.5515 - val_acc: 0.8290
+Epoch 14/15
+10525/10525 [==============================] - 14s 1ms/sample - loss: 0.2365 - acc: 0.9158 - val_loss: 0.5132 - val_acc: 0.8521
+Epoch 15/15
+10525/10525 [==============================] - 13s 1ms/sample - loss: 0.2051 - acc: 0.9269 - val_loss: 0.5623 - val_acc: 0.8487
+Runtime: 108832.818498101
+```
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m2_acc.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m2_loss.png" alt="">
+
+
+```python
+3000/3000 [==============================] - 2s 504us/sample - loss: 0.5735 - acc: 0.8433
+```
+
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cm_2.png){: .align-center}
+
+DATA AUGMENTATION
+
+```python
+# Data Augmentation Section
+import random
+from scipy import ndarray
+import skimage as sk
+from skimage import transform
+from skimage import util
+from skimage.exposure import adjust_gamma
+
+#Definning augmentation operations.
+def horizontal_flip(image):
+    """Flips the given image horizontally"""
+    return image[:, ::-1]
+
+def up_side_down(image):
+    return np.rot90(image, 2)
+
+# Defining augmentation methods.    
+methods={'h_flip':horizontal_flip,'u_s_d':up_side_down}
+
+data = []
+labels = []
+
+path = "../input/seg_train/seg_train/"
+for category in os.listdir(path):
+    if(category == "buildings"):
+        label = 0
+    elif(category == "forest"):
+        label = 1
+    elif(category == "glacier"):
+        label = 2  
+    elif(category == "mountain"):
+        label = 3  
+    elif(category == "sea"):
+        label = 4   
+    elif(category == "street"):
+        label = 5
+
+    training_subfolder_path = path + "/" + category        
+    for file in os.listdir(training_subfolder_path):
+        image_path = training_subfolder_path + "/" + file
+        image = cv2.imread(image_path)
+
+        #Resize all images so they all have the same size
+        image = cv2.resize(image,(100,100))
+        image = np.array(image)
+
+        #Standardize data by dividing by 255
+        image = image.astype('float32')/255.0
+        data.append(image)
+        labels.append(label)
+
+        # Randomly choosing an augmentation operation.
+        key = random.choice(list(methods))
+        image=methods[key](image)
+        data.append(image)
+        labels.append(label)
+
+# Generating training dataset.
+print("Training data", len(data))
+
+#Shuffle data
+data, labels = shuffle(data, labels)
+data = np.array(data)
+labels = np.array(labels)
+train_data=data
+
+Training data 28068
+```
+Let's try my model with data augmentation.
+
+
+```python
+# Third Prediction
+model=cnn_model()
+number_epochs=20
+batch_size=128
+
+model_fit(model, number_epochs,batch_size)
+```
+
+```python
+Train on 21051 samples, validate on 7017 samples
+Epoch 1/20
+21051/21051 [==============================] - 28s 1ms/sample - loss: 1.2831 - acc: 0.4487 - val_loss: 1.0145 - val_acc: 0.5780
+Epoch 2/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.9501 - acc: 0.5951 - val_loss: 0.7999 - val_acc: 0.6697
+Epoch 3/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.7789 - acc: 0.6966 - val_loss: 0.6473 - val_acc: 0.7525
+Epoch 4/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.6329 - acc: 0.7665 - val_loss: 0.6178 - val_acc: 0.7723
+Epoch 5/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.5546 - acc: 0.8006 - val_loss: 0.4871 - val_acc: 0.8236
+Epoch 6/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.4966 - acc: 0.8195 - val_loss: 0.5334 - val_acc: 0.8062
+Epoch 7/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.4575 - acc: 0.8352 - val_loss: 0.4871 - val_acc: 0.8199
+Epoch 8/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3987 - acc: 0.8574 - val_loss: 0.4286 - val_acc: 0.8445
+Epoch 9/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3701 - acc: 0.8674 - val_loss: 0.4903 - val_acc: 0.8288
+Epoch 10/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3255 - acc: 0.8829 - val_loss: 0.4838 - val_acc: 0.8347
+Epoch 11/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2967 - acc: 0.8918 - val_loss: 0.4887 - val_acc: 0.8344
+Epoch 12/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2592 - acc: 0.9085 - val_loss: 0.4946 - val_acc: 0.8333
+Epoch 13/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2484 - acc: 0.9102 - val_loss: 0.5566 - val_acc: 0.8176
+Epoch 14/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2103 - acc: 0.9258 - val_loss: 0.5565 - val_acc: 0.8410
+Epoch 15/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2018 - acc: 0.9270 - val_loss: 0.5551 - val_acc: 0.8340
+Epoch 16/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1870 - acc: 0.9330 - val_loss: 0.5289 - val_acc: 0.8407
+Epoch 17/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1612 - acc: 0.9432 - val_loss: 0.5778 - val_acc: 0.8384
+Epoch 18/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1836 - acc: 0.9368 - val_loss: 0.5725 - val_acc: 0.8465
+Epoch 19/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1415 - acc: 0.9489 - val_loss: 0.6176 - val_acc: 0.8371
+Epoch 20/20
+21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1182 - acc: 0.9572 - val_loss: 0.6233 - val_acc: 0.8427
+Runtime: 110212.927397731
+```
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m3_acc.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m3_loss.png" alt="">
+
+
+```python
+3000/3000 [==============================] - 2s 510us/sample - loss: 0.6710 - acc: 0.8473
+```
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cm_3.png){: .align-center}

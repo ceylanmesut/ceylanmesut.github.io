@@ -240,14 +240,16 @@ GIFF
 
 ![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/dropout.png){: .align-center}
 
-Srivastava, Nitish, et al. ”Dropout: a simple way to prevent neural networks from
-overfitting”, JMLR 2014
+Dropout image: Srivastava, Nitish, et al. ”Dropout: a simple way to prevent neural networks from overfitting”, JMLR 2014
 
+* **Adam Optimizer:** Adam optimizer is one of the **most popular optimization method** being used training deep neural networks. Fundamentally, it is combination of **RMSprop and Stochastic Gradient Descend  with momentum.** It is **adaptive learning rate method** in which **individual learning rates** are computed for different parameters. It leverages first and second moments of gradient computations and use them to adapt the learning rate.
+
+
+According to
 ``` python
 # Constructing Convolutional Neural Network Model
 def cnn_model():
     """First Convolutional Nueral Network Model"""
-
     model = Models.Sequential()
 
     model.add(Layers.Conv2D(128,kernel_size=(3,3),activation='relu',input_shape=(100,100,3)))
@@ -266,28 +268,28 @@ def cnn_model():
     model.add(Layers.Dropout(0.5))
 
     model.add(Layers.Dense(6,activation='softmax'))
-
     model.compile(optimizer=Optimizer.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0, amsgrad=False),
                   loss='sparse_categorical_crossentropy',metrics=['accuracy'])
     return model
 ```
 
-
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/real_estate_project/Dashboard.png" alt="">
-
-
+So far so good. I constructed my Convolutional Neural Network structure with Adam optimizer and proper learning rate. Next, I define model fit function to
+fit the neural network and make prediction. The function also plots accuracy and loss outcomes along with confusion matrix.
 
 
-def model_fit(model, number_epochs, batch_size):
+```python
+# Let's define model fit function.
+def model_fit(my_model, number_epochs, batch_size):
     """This function accepts neural network structure, number of epochs and bathc size as function parameters and train the neural network."""
     start_time = timeit.default_timer()
     # Fit model
-    my_model= model
-    trained = my_model.fit(train_data,labels,epochs=number_epochs,validation_split=0.25,batch_size=batch_size)
+    model= my_model
+    trained = model.fit(train_data,labels,epochs=number_epochs,validation_split=0.25,batch_size=batch_size)
 
     elapsed = timeit.default_timer()
     print('Runtime:', elapsed)
 
+    # Plotting accuracy and validation accuracy.
     plt.plot(trained.history['acc'])
     plt.plot(trained.history['val_acc'])
     plt.title('Model Accuracy')
@@ -296,7 +298,7 @@ def model_fit(model, number_epochs, batch_size):
     plt.legend(['Train', 'Test'], loc='upper left')
     plt.show()
 
-    #plt.subplot(2,2,2,frameon=True)
+    # Plotting loss and validation loss.
     plt.plot(trained.history['loss'])
     plt.plot(trained.history['val_loss'])
     plt.title('Model Loss')
@@ -305,38 +307,66 @@ def model_fit(model, number_epochs, batch_size):
     plt.legend(['Train', 'Test'], loc='upper left')
     plt.show()
 
-```python
-model=cnn_model
-number_epochs=20
-batch_size=32
-
-model_fit(model, number_epochs,batch_size)
-```
-
-
-
-
-
-
-
-
-
-
-``` python
-def make_prediction():
-    # Prediction on testing set
+    # Prediction on test set.
     test_images,test_labels = load_data('../input/seg_test/seg_test/')
     test_images = np.array(test_images)
     test_labels = np.array(test_labels)
     model.evaluate(test_images,test_labels, verbose=1)
 
-    # CONF
+    # Plotting Confusion Matrix.
     predictions = model.predict(test_images)
     pred_labels = np.argmax(predictions, axis = 1)
     frame={'y':test_labels,'y_predicted':pred_labels}
     df = pd.DataFrame(frame, columns=['y','y_predicted'])
     confusion_matrix = pd.crosstab(df['y'], df['y_predicted'],rownames=['True Label'], colnames=['Predicted Label'], margins = False)
-
     sn.heatmap(confusion_matrix,annot=True,fmt="d",cmap="Blues",linecolor="blue", vmin=0,vmax=500)
     plt.title('Confusion Matrix', fontsize=16)
+```
+
+Now, let's run first prediction with defined neural network.
+
+```python
+# First Prediction
+model=cnn_model()
+number_epochs=15
+batch_size=32
+
+model_fit(model, number_epochs,batch_size)
+```
+
+Let's take a look my model summary and parameters.
+
+```python
+Model Summary
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_40 (Conv2D)           (None, 98, 98, 128)       3584      
+_________________________________________________________________
+conv2d_41 (Conv2D)           (None, 96, 96, 128)       147584    
+_________________________________________________________________
+max_pooling2d_16 (MaxPooling (None, 32, 32, 128)       0         
+_________________________________________________________________
+conv2d_42 (Conv2D)           (None, 30, 30, 256)       295168    
+_________________________________________________________________
+conv2d_43 (Conv2D)           (None, 28, 28, 256)       590080    
+_________________________________________________________________
+max_pooling2d_17 (MaxPooling (None, 9, 9, 256)         0         
+_________________________________________________________________
+flatten_9 (Flatten)          (None, 20736)             0         
+_________________________________________________________________
+dense_26 (Dense)             (None, 256)               5308672   
+_________________________________________________________________
+dropout_17 (Dropout)         (None, 256)               0         
+_________________________________________________________________
+dense_27 (Dense)             (None, 256)               65792     
+_________________________________________________________________
+dropout_18 (Dropout)         (None, 256)               0         
+_________________________________________________________________
+dense_28 (Dense)             (None, 6)                 1542      
+=================================================================
+Total params: 6,412,422
+Trainable params: 6,412,422
+Non-trainable params: 0
+_________________________________________________________________
 ```

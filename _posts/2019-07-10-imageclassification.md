@@ -370,3 +370,45 @@ Trainable params: 6,412,422
 Non-trainable params: 0
 _________________________________________________________________
 ```
+```python
+Train on 10525 samples, validate on 3509 samples
+Epoch 1/15
+10525/10525 [==============================] - 17s 2ms/sample - loss: 1.2295 - acc: 0.4968 - val_loss: 0.9556 - val_acc: 0.6022
+Epoch 2/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.9637 - acc: 0.6113 - val_loss: 0.8318 - val_acc: 0.6566
+Epoch 3/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.8167 - acc: 0.6862 - val_loss: 0.7628 - val_acc: 0.7244
+Epoch 4/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.7039 - acc: 0.7385 - val_loss: 0.5879 - val_acc: 0.7885
+Epoch 5/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.6204 - acc: 0.7769 - val_loss: 0.5494 - val_acc: 0.8054
+Epoch 6/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.5450 - acc: 0.8058 - val_loss: 0.5359 - val_acc: 0.8119
+Epoch 7/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.4795 - acc: 0.8276 - val_loss: 0.5348 - val_acc: 0.8091
+Epoch 8/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.4039 - acc: 0.8571 - val_loss: 0.5198 - val_acc: 0.8259
+Epoch 9/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.3538 - acc: 0.8746 - val_loss: 0.5324 - val_acc: 0.8282
+Epoch 10/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.3164 - acc: 0.8898 - val_loss: 0.5877 - val_acc: 0.8128
+Epoch 11/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.2850 - acc: 0.9028 - val_loss: 0.7109 - val_acc: 0.7888
+Epoch 12/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.2332 - acc: 0.9189 - val_loss: 0.6361 - val_acc: 0.8176
+Epoch 13/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.1996 - acc: 0.9286 - val_loss: 0.8162 - val_acc: 0.7903
+Epoch 14/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.1849 - acc: 0.9376 - val_loss: 0.7688 - val_acc: 0.8176
+Epoch 15/15
+10525/10525 [==============================] - 15s 1ms/sample - loss: 0.1574 - acc: 0.9457 - val_loss: 0.7745 - val_acc: 0.8145
+Runtime: 108304.077418699
+```
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/m1_acc.png){: .align-center}
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/m1_loss.png){: .align-center}
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m1_acc.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m1_loss.png" alt="">
+
+```python
+3000/3000 [==============================] - 2s 508us/sample - loss: 0.7719 - acc: 0.8067
+```

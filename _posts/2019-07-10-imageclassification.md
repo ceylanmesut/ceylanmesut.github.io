@@ -13,10 +13,10 @@ toc_sticky: true
 ---
 
 ## Introduction
-Main idea of this project is to successfully classify intel landscape image dataset. This dataset consists of 6 different landscapes namely; **buildings, streets, glaciers, forests, deserts and XX** and I'm going to use **Convolutional Neural Networks (CNN)** machine learning method to classify these images **as fast as and as accurate as possible.**
+Main idea of this project is to successfully classify intel landscape image dataset. This dataset consists of 6 different landscapes namely; **buildings, streets, glaciers, forests, deserts and XX** and I'm going to use **Convolutional Neural Networks (ConvNets)** machine learning method to classify these images **as fast as and as accurate as possible.**
 
 Convolutional Neural Network is **special type of Artificial Neural Network (ANN)** structure.
-What separates Convolutional Neural Networks from Artificial Neural Networks is state of art structure of **CNN that is specifically created for image classification and related tasks.** Unlike ANN's fully connected network structure, **Cluster of Convolutional Layers is the core of CNN.** and it is the main engine to squeeze the images into processable size and structure. Not surprisingly, this unique structure boosts computational capability of CNN during image classification tasks when it compared to ANN.
+What separates Convolutional Neural Networks from Artificial Neural Networks is state of art structure of **ConvNets that is specifically created for image classification and related tasks.** Unlike ANN's fully connected network structure, **Cluster of Convolutional Layers is the core of ConvNets.** and it is the main engine to squeeze the images into processable size and structure. Not surprisingly, this unique structure boosts computational capability of ConvNets during image classification tasks when it compared to ANN.
 
 
 * **Dataset**: Intel image dataset includes 6 different landscape images with 150x150 size.
@@ -35,16 +35,16 @@ What separates Convolutional Neural Networks from Artificial Neural Networks is 
 * **0.Explanatory Data Analysis**: Understanding the dataset and check class imbalance.
 
 
-* **Convolutional Neural Network**: Creating **CNN model** for the problem.
+* **Convolutional Neural Network**: Creating **ConvNets model** for the problem.
 
 
-* **Hyperparameter Tuning**: Optimizing **hyperparameters** of the CNN model to achieve better results.
+* **Hyperparameter Tuning**: Optimizing **hyperparameters** of the ConvNets model to achieve better results.
 
 ## Models
-* **CNN**:  **Variants of CNN** models.
+* **ConvNets**:  **Variants of ConvNets** models.
 
 
-### Web Scraping Code
+### EDA
 
 Let's load necessary packages.
 
@@ -219,12 +219,34 @@ for i in range(0,3,1):
 
 
 
-![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cl_images.png.png){: .align-center}
-AAAAAA
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cl_images.png){: .align-center}
+
+Alright, let's start to build our first Convolutional Neural Network. Before constructing the model, I would like to introduce core elements of ConvNets structure.
+* **Convolutional Layer:** **Fundamental component** of ConvNets. These layers are responsible for **filtering given input image and capturing certain features** of the image via applying filter operation. Essentially, Conv Layers' role is filtering useful information from given input image.
+
+GIFFF
+* **Pooling Layers :** These layers are responsible for **reducing the number of parameters** of feature map that we obtained after convolutional layer. They function as **iterating specific kernel over feature map** to **apply function** on the map. Although there are different **types** such as **Max, Average and Sum pooling,** I used **Max Pooling** in which kernel iterates over rectified feature map and **takes largest elements of zone** that kernel applies its function.
+
+GIFF
+
+
+
+
+* **Activation Functions:** They introduces **non-linearity** into neural network structure. Their role is to **transform input signal of a node into output signal.** Introducing non-linearity into NN structure is **crucial to be able to induce learning of complex non-linear relation of input and output.** Most common activation functions are **Sigmoid** (Logistic), **Tanh** (Hyperbolic Tangent) and **ReLu** (Rectified Linear Units).
+
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/acv_fun2.png){: .align-center}
+
+* **Dropout:** Simply this **layer dropouts some of the nodes (units)** within neural network structure with **certain probability** while **forward and backward propagation.** Dropout layer is essentially included within model to **avoid overfitting** because **deeply connected and inter-dependent nodes naturally cause overfitting** through each training state.
+
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/dropout.png){: .align-center}
+
+Srivastava, Nitish, et al. ”Dropout: a simple way to prevent neural networks from
+overfitting”, JMLR 2014
+
 ``` python
 # Constructing Convolutional Neural Network Model
 def cnn_model():
-    """function description"""
+    """First Convolutional Nueral Network Model"""
 
     model = Models.Sequential()
 

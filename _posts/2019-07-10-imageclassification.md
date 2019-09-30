@@ -335,7 +335,7 @@ model_fit(model, number_epochs,batch_size)
 
 Let's take a look my model summary and parameters.
 
-
+```python
 Model Summary
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
@@ -367,7 +367,7 @@ dense_28 (Dense)             (None, 6)                 1542
 Total params: 6,412,422
 Trainable params: 6,412,422
 Non-trainable params: 0
-
+```
 
 At the moment, we have 10525 training image and 3509 validation image.
 
@@ -385,18 +385,7 @@ Epoch 5/15
 10525/10525 [==============================] - 15s 1ms/sample - loss: 0.6204 - acc: 0.7769 - val_loss: 0.5494 - val_acc: 0.8054
 Epoch 6/15
 10525/10525 [==============================] - 15s 1ms/sample - loss: 0.5450 - acc: 0.8058 - val_loss: 0.5359 - val_acc: 0.8119
-Epoch 7/15
-10525/10525 [==============================] - 15s 1ms/sample - loss: 0.4795 - acc: 0.8276 - val_loss: 0.5348 - val_acc: 0.8091
-Epoch 8/15
-10525/10525 [==============================] - 15s 1ms/sample - loss: 0.4039 - acc: 0.8571 - val_loss: 0.5198 - val_acc: 0.8259
-Epoch 9/15
-10525/10525 [==============================] - 15s 1ms/sample - loss: 0.3538 - acc: 0.8746 - val_loss: 0.5324 - val_acc: 0.8282
-Epoch 10/15
-10525/10525 [==============================] - 15s 1ms/sample - loss: 0.3164 - acc: 0.8898 - val_loss: 0.5877 - val_acc: 0.8128
-Epoch 11/15
-10525/10525 [==============================] - 15s 1ms/sample - loss: 0.2850 - acc: 0.9028 - val_loss: 0.7109 - val_acc: 0.7888
-Epoch 12/15
-10525/10525 [==============================] - 15s 1ms/sample - loss: 0.2332 - acc: 0.9189 - val_loss: 0.6361 - val_acc: 0.8176
+[==============================]
 Epoch 13/15
 10525/10525 [==============================] - 15s 1ms/sample - loss: 0.1996 - acc: 0.9286 - val_loss: 0.8162 - val_acc: 0.7903
 Epoch 14/15
@@ -441,24 +430,7 @@ Epoch 2/15
 10525/10525 [==============================] - 14s 1ms/sample - loss: 1.0348 - acc: 0.5850 - val_loss: 0.8856 - val_acc: 0.6669
 Epoch 3/15
 10525/10525 [==============================] - 14s 1ms/sample - loss: 0.9198 - acc: 0.6383 - val_loss: 0.7974 - val_acc: 0.6948
-Epoch 4/15
-10525/10525 [==============================] - 13s 1ms/sample - loss: 0.8045 - acc: 0.6896 - val_loss: 0.6988 - val_acc: 0.7378
-Epoch 5/15
-10525/10525 [==============================] - 14s 1ms/sample - loss: 0.6838 - acc: 0.7540 - val_loss: 0.6444 - val_acc: 0.7729
-Epoch 6/15
-10525/10525 [==============================] - 13s 1ms/sample - loss: 0.6175 - acc: 0.7853 - val_loss: 0.5669 - val_acc: 0.7968
-Epoch 7/15
-10525/10525 [==============================] - 14s 1ms/sample - loss: 0.5610 - acc: 0.8050 - val_loss: 0.5511 - val_acc: 0.8019
-Epoch 8/15
-10525/10525 [==============================] - 14s 1ms/sample - loss: 0.4851 - acc: 0.8310 - val_loss: 0.5007 - val_acc: 0.8236
-Epoch 9/15
-10525/10525 [==============================] - 14s 1ms/sample - loss: 0.4219 - acc: 0.8548 - val_loss: 0.4971 - val_acc: 0.8287
-Epoch 10/15
-10525/10525 [==============================] - 14s 1ms/sample - loss: 0.3871 - acc: 0.8620 - val_loss: 0.4914 - val_acc: 0.8321
-Epoch 11/15
-10525/10525 [==============================] - 14s 1ms/sample - loss: 0.3481 - acc: 0.8775 - val_loss: 0.5058 - val_acc: 0.8213
-Epoch 12/15
-10525/10525 [==============================] - 14s 1ms/sample - loss: 0.2962 - acc: 0.8966 - val_loss: 0.4866 - val_acc: 0.8427
+[==============================]
 Epoch 13/15
 10525/10525 [==============================] - 14s 1ms/sample - loss: 0.2715 - acc: 0.9031 - val_loss: 0.5515 - val_acc: 0.8290
 Epoch 14/15
@@ -482,6 +454,7 @@ Yet, model manages to decrease **loss from 0.77 to 0.57** and to **increase accu
 
 Reflection of model accuracy increase can be observed from confusion matrix as well. Number of correct classification of building (label 0) and mountain (label 3) increased.
 
+## **Data Augmentation Section**
 As I am looking forward **to increase my model accuracy,** I start applying **Data Augmentation** to increase my training and validation data. Data Augmentation is a method to increase available dataset by altering image specification of existing image. **Alteration** may involve:
 * Horizontal or vertical flip,
 * Gamma adjustment,
@@ -511,10 +484,10 @@ def up_side_down(image):
 
 # Defining augmentation methods.    
 methods={'h_flip':horizontal_flip,'u_s_d':up_side_down}
-
+# Defining data and label lists to append images into.
 data = []
 labels = []
-
+# Setting the path of data.
 path = "../input/seg_train/seg_train/"
 for category in os.listdir(path):
     if(category == "buildings"):
@@ -561,7 +534,7 @@ train_data=data
 
 Training data 28068
 ```
-Let's try my model with data augmentation.
+After data augmentation process, I doubled my training data amount from 14k to 28k images. Let's try my model with data augmentation.
 
 
 ```python
@@ -569,9 +542,9 @@ Let's try my model with data augmentation.
 model=cnn_model()
 number_epochs=20
 batch_size=128
-
 model_fit(model, number_epochs,batch_size)
 ```
+Now model trains with 21k images and validates with 7k images.
 
 ```python
 Train on 21051 samples, validate on 7017 samples
@@ -585,30 +558,7 @@ Epoch 4/20
 21051/21051 [==============================] - 27s 1ms/sample - loss: 0.6329 - acc: 0.7665 - val_loss: 0.6178 - val_acc: 0.7723
 Epoch 5/20
 21051/21051 [==============================] - 27s 1ms/sample - loss: 0.5546 - acc: 0.8006 - val_loss: 0.4871 - val_acc: 0.8236
-Epoch 6/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.4966 - acc: 0.8195 - val_loss: 0.5334 - val_acc: 0.8062
-Epoch 7/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.4575 - acc: 0.8352 - val_loss: 0.4871 - val_acc: 0.8199
-Epoch 8/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3987 - acc: 0.8574 - val_loss: 0.4286 - val_acc: 0.8445
-Epoch 9/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3701 - acc: 0.8674 - val_loss: 0.4903 - val_acc: 0.8288
-Epoch 10/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3255 - acc: 0.8829 - val_loss: 0.4838 - val_acc: 0.8347
-Epoch 11/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2967 - acc: 0.8918 - val_loss: 0.4887 - val_acc: 0.8344
-Epoch 12/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2592 - acc: 0.9085 - val_loss: 0.4946 - val_acc: 0.8333
-Epoch 13/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2484 - acc: 0.9102 - val_loss: 0.5566 - val_acc: 0.8176
-Epoch 14/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2103 - acc: 0.9258 - val_loss: 0.5565 - val_acc: 0.8410
-Epoch 15/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.2018 - acc: 0.9270 - val_loss: 0.5551 - val_acc: 0.8340
-Epoch 16/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1870 - acc: 0.9330 - val_loss: 0.5289 - val_acc: 0.8407
-Epoch 17/20
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1612 - acc: 0.9432 - val_loss: 0.5778 - val_acc: 0.8384
+[==============================]
 Epoch 18/20
 21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1836 - acc: 0.9368 - val_loss: 0.5725 - val_acc: 0.8465
 Epoch 19/20
@@ -617,14 +567,17 @@ Epoch 20/20
 21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1182 - acc: 0.9572 - val_loss: 0.6233 - val_acc: 0.8427
 Runtime: 110212.927397731
 ```
+Overfitting problem is still existing in the model.
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m3_acc.png" alt="">
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m3_loss.png" alt="">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m3_acc.png" alt="AA">
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m3_loss.png" alt="AA">
 
 
 ```python
 3000/3000 [==============================] - 2s 510us/sample - loss: 0.6710 - acc: 0.8473
 ```
+**No substantial improvement** on model accuracy.
+
 ![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cm_3.png){: .align-center}
 
 
@@ -641,7 +594,6 @@ def cnn_model2():
     model.add(Layers.Conv2D(256,kernel_size=(3,3),activation='relu',kernel_regularizer=l2(0.001)))
     model.add(Layers.Conv2D(256,kernel_size=(3,3),activation='relu',kernel_regularizer=l2(0.001)))
     model.add(Layers.MaxPool2D(pool_size=(3,3)))
-
 
     model.add(Layers.Flatten())
     model.add(Layers.Dense(256,activation='relu',kernel_regularizer=l2(0.001)))
@@ -681,11 +633,6 @@ Epoch 4/60
 Epoch 5/60
 21051/21051 [==============================] - 27s 1ms/sample - loss: 1.1817 - acc: 0.7067 - val_loss: 1.0590 - val_acc: 0.7532
 [==============================]
-
-Epoch 56/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3517 - acc: 0.9548 - val_loss: 0.6832 - val_acc: 0.8636
-Epoch 57/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3496 - acc: 0.9556 - val_loss: 0.6866 - val_acc: 0.8612
 Epoch 58/60
 21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3583 - acc: 0.9519 - val_loss: 0.6932 - val_acc: 0.8551
 Epoch 59/60

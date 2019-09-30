@@ -1,7 +1,7 @@
 ---
 title: "Intel Image Data Classification Project"
 date: 2019-09-13
-tags: Computer Vision, Machine Learning, Convolutional Neural Network]
+tags: Computer_Vision, Machine_Learning, Convolutional_Neural_Network]
 header:
  image: "/images/house.png"
 excerpt: "Image Classification Project on Landscape Images."
@@ -228,9 +228,7 @@ Alright, let's start to build our first Convolutional Neural Network. Before con
 
 * **Pooling Layers :** These layers are responsible for **reducing the number of parameters** of feature map that we obtained after convolutional layer. They function as **iterating specific kernel over feature map** to **apply function** on the map. Although there are different **types** such as **Max, Average and Sum pooling,** I used **Max Pooling** in which kernel iterates over rectified feature map and **takes largest elements of zone** that kernel applies its function.
 
-GIFF
-
-
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/max_pool.gif){: .align-center}
 
 
 * **Activation Functions:** They introduces **non-linearity** into neural network structure. Their role is to **transform input signal of a node into output signal.** Introducing non-linearity into NN structure is **crucial to be able to induce learning of complex non-linear relation of input and output.** Most common activation functions are **Sigmoid** (Logistic), **Tanh** (Hyperbolic Tangent) and **ReLu** (Rectified Linear Units).

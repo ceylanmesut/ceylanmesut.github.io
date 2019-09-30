@@ -44,7 +44,7 @@ What separates Convolutional Neural Networks from Artificial Neural Networks is 
 * **ConvNets**:  **Variants of ConvNets** models.
 
 
-### EDA
+## Data Exploration
 
 Let's load necessary packages.
 
@@ -224,7 +224,8 @@ for i in range(0,3,1):
 Alright, let's start to build our first Convolutional Neural Network. Before constructing the model, I would like to introduce core elements of ConvNets structure.
 * **Convolutional Layer:** **Fundamental component** of ConvNets. These layers are responsible for **filtering given input image and capturing certain features** of the image via applying filter operation. Essentially, Conv Layers' role is filtering useful information from given input image.
 
-GIFFF
+![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cnn.gif){: .align-center}
+
 * **Pooling Layers :** These layers are responsible for **reducing the number of parameters** of feature map that we obtained after convolutional layer. They function as **iterating specific kernel over feature map** to **apply function** on the map. Although there are different **types** such as **Max, Average and Sum pooling,** I used **Max Pooling** in which kernel iterates over rectified feature map and **takes largest elements of zone** that kernel applies its function.
 
 GIFF
@@ -454,7 +455,7 @@ Yet, model manages to decrease **loss from 0.77 to 0.57** and to **increase accu
 
 Reflection of model accuracy increase can be observed from confusion matrix as well. Number of correct classification of building (label 0) and mountain (label 3) increased.
 
-## **Data Augmentation Section**
+## **Data Augmentation**
 As I am looking forward **to increase my model accuracy,** I start applying **Data Augmentation** to increase my training and validation data. Data Augmentation is a method to increase available dataset by altering image specification of existing image. **Alteration** may involve:
 * Horizontal or vertical flip,
 * Gamma adjustment,
@@ -474,7 +475,7 @@ from skimage import transform
 from skimage import util
 from skimage.exposure import adjust_gamma
 
-#Definning augmentation operations.
+#Defining augmentation operations.
 def horizontal_flip(image):
     """Flips the given image horizontally"""
     return image[:, ::-1]

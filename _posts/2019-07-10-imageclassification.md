@@ -335,7 +335,7 @@ model_fit(model, number_epochs,batch_size)
 
 Let's take a look my model summary and parameters.
 
-```python
+
 Model Summary
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
@@ -367,8 +367,8 @@ dense_28 (Dense)             (None, 6)                 1542
 Total params: 6,412,422
 Trainable params: 6,412,422
 Non-trainable params: 0
-_________________________________________________________________
-```
+
+
 At the moment, we have 10525 training image and 3509 validation image.
 
 ```python
@@ -490,6 +490,7 @@ As I am looking forward **to increase my model accuracy,** I start applying **Da
 * Cropping, zooming and stretching.
 
 In my model, I only benefit from flipping images horizontally and vertically. I observed **decrease on accuracy** when I applied **gamma adjustment, zooming and sheering.**
+
 
 ```python
 # Data Augmentation Section

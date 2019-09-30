@@ -245,7 +245,8 @@ Dropout image: Srivastava, Nitish, et al. ”Dropout: a simple way to prevent ne
 * **Adam Optimizer:** Adam optimizer is one of the **most popular optimization method** being used training deep neural networks. Fundamentally, it is combination of **RMSprop and Stochastic Gradient Descend  with momentum.** It is **adaptive learning rate method** in which **individual learning rates** are computed for different parameters. It leverages first and second moments of gradient computations and use them to adapt the learning rate.
 
 
-According to
+According to discussed structure ConvNets, I create below neural network to train my model and conduct predictions.
+
 ``` python
 # Constructing Convolutional Neural Network Model
 def cnn_model():
@@ -285,7 +286,6 @@ def model_fit(my_model, number_epochs, batch_size):
     # Fit model
     model= my_model
     trained = model.fit(train_data,labels,epochs=number_epochs,validation_split=0.25,batch_size=batch_size)
-
     elapsed = timeit.default_timer()
     print('Runtime:', elapsed)
 
@@ -323,14 +323,13 @@ def model_fit(my_model, number_epochs, batch_size):
     plt.title('Confusion Matrix', fontsize=16)
 ```
 
-Now, let's run first prediction with defined neural network.
+Now, let's run first prediction with defined neural network. I run my model for 15 epochs with 32 batch size.
 
 ```python
 # First Prediction
 model=cnn_model()
 number_epochs=15
 batch_size=32
-
 model_fit(model, number_epochs,batch_size)
 ```
 
@@ -370,6 +369,7 @@ Trainable params: 6,412,422
 Non-trainable params: 0
 _________________________________________________________________
 ```
+At the moment, we have 10525 training image and 3509 validation image.
 
 ```python
 Train on 10525 samples, validate on 3509 samples
@@ -406,27 +406,32 @@ Epoch 15/15
 Runtime: 108304.077418699
 ```
 
+Let's analyze model outcomes. **Clearly**, my model starts to **overfitting from 5th Epoch** as train and test lines **cross** each other and **builds separation** through following epochs. Therefore, it is easy to observe that model is **overfitting to training set** and it has poor performance on validation set.
+
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m1_acc.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m1_loss.png" alt="">
 
 ```python
 3000/3000 [==============================] - 2s 508us/sample - loss: 0.7719 - acc: 0.8067
 ```
-COMMENTS ABOUT IT
+Overall, I obtain %80 accuracy from first prediction. As a baseline score, it is not bad but requires improvement.
 
 ![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cm_1.png){: .align-center}
 
-Let's increase the batch size.
+From confusion matrix, one can observe that model **performs poorly** on recognizing **Building images** (Label 0) and mountain image (label 3). It misclassifies **mountains as glaciers** and **buildings as streets** or vice versa.
+
+
+As next step, let's increase the batch size to boost batch of images that being trained in each step. I increase batch size from 32 to 128.
 
 ```python
 # Second Prediction
 model=cnn_model()
 number_epochs=15
 batch_size=128
-
 model_fit(model, number_epochs,batch_size)
 ```
 
+At this stage, I did not change structure of my model.
 
 ```python
 Train on 10525 samples, validate on 3509 samples
@@ -462,6 +467,8 @@ Epoch 15/15
 10525/10525 [==============================] - 13s 1ms/sample - loss: 0.2051 - acc: 0.9269 - val_loss: 0.5623 - val_acc: 0.8487
 Runtime: 108832.818498101
 ```
+Alright, **overfitting** problem is **still evident** fact from 7th Epoch.
+
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m2_acc.png" alt="">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m2_loss.png" alt="">
 
@@ -469,10 +476,20 @@ Runtime: 108832.818498101
 ```python
 3000/3000 [==============================] - 2s 504us/sample - loss: 0.5735 - acc: 0.8433
 ```
+Yet, model manages to decrease **loss from 0.77 to 0.57** and to **increase accuracy almost %4.** This is great!. Now, the model correctly **classifies %84 of images.**
 
 ![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cm_2.png){: .align-center}
 
-DATA AUGMENTATION
+Reflection of model accuracy increase can be observed from confusion matrix as well. Number of correct classification of building (label 0) and mountain (label 3) increased.
+
+As I am looking forward **to increase my model accuracy,** I start applying **Data Augmentation** to increase my training and validation data. Data Augmentation is a method to increase available dataset by altering image specification of existing image. **Alteration** may involve:
+* Horizontal or vertical flip,
+* Gamma adjustment,
+* Rotation of image,
+* Adding Gaussian noise,
+* Cropping, zooming and stretching.
+
+In my model, I only benefit from flipping images horizontally and vertically. I observed **decrease on accuracy** when I applied **gamma adjustment, zooming and sheering.**
 
 ```python
 # Data Augmentation Section

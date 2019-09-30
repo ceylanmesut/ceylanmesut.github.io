@@ -77,7 +77,7 @@ TRAIN_PATH = "../input/seg_train/seg_train/"
 TEST_PATH = "../input/seg_test/seg_test/"
 ```
 
-So far so good. Next, let's **discover image categories** by their percentage distributions.
+Next, let's **discover image categories** by their percentage distributions.
 ``` python
 # Exploratory analysis
 def explore_categories(path):
@@ -533,7 +533,7 @@ train_data=data
 
 Training data 28068
 ```
-After data augmentation process, I doubled my training data amount from 14k to 28k images. Let's try my model with data augmentation.
+After data augmentation process, I doubled my training data amount **from 14k to 28k images.** Let's try my model with data augmentation.
 
 
 ```python
@@ -566,7 +566,7 @@ Epoch 20/20
 21051/21051 [==============================] - 27s 1ms/sample - loss: 0.1182 - acc: 0.9572 - val_loss: 0.6233 - val_acc: 0.8427
 Runtime: 110212.927397731
 ```
-Overfitting problem is still existing in the model.
+**Overfitting** problem is **still existing** in the model.
 
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m3_acc.png" alt="AA">
 <img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m3_loss.png" alt="AA">
@@ -650,77 +650,10 @@ Runtime: 99478.285476088
 
 ![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cm_4.png){: .align-center}
 
+## Results
 
-Let's try another optimizer SGD.
+At the end of this project, I tried different approaches to be able to classify intel landscape image dataset as accurate as possible. I used **ConvNets** to tackle this problem. To **avoid overfitting** I utilized **L2 Regularization (Gaussian Prior/Ridge) along with dropout and data augmentation.**
 
-```python
-# Construct model
-def cnn_model3():
-    """function description"""
+Finally, designed deep learning model is able to **classify landscape images with around %87 success rate.**
 
-    model = Models.Sequential()
-
-    model.add(Layers.Conv2D(128,kernel_size=(3,3),activation='relu',input_shape=(100,100,3)))
-    model.add(Layers.Conv2D(128,kernel_size=(3,3),activation='relu'))
-    model.add(Layers.MaxPool2D(pool_size=(3,3)))
-
-    model.add(Layers.Conv2D(256,kernel_size=(3,3),activation='relu',kernel_regularizer=l2(0.001)))
-    model.add(Layers.Conv2D(256,kernel_size=(3,3),activation='relu',kernel_regularizer=l2(0.001)))
-    model.add(Layers.MaxPool2D(pool_size=(3,3)))
-
-
-    model.add(Layers.Flatten())
-    model.add(Layers.Dense(256,activation='relu',kernel_regularizer=l2(0.001)))
-    model.add(Layers.Dropout(0.5))
-
-    model.add(Layers.Dense(256,activation='relu',kernel_regularizer=l2(0.001)))
-    model.add(Layers.Dropout(0.5))
-
-    model.add(Layers.Dense(6,activation='softmax'))
-
-    model.compile(optimizer=SGD(learning_rate=0.01, momentum=0.8, nesterov=True),
-                  loss='sparse_categorical_crossentropy',metrics=['accuracy'])  
-    return model
-```
-REsults:
-
-```python
-# Fifth Prediction
-model=cnn_model3()
-number_epochs=60
-batch_size=128
-
-model_fit(model, number_epochs,batch_size)
-```
-```python
-Train on 21051 samples, validate on 7017 samples
-Epoch 1/60
-21051/21051 [==============================] - 29s 1ms/sample - loss: 2.7490 - acc: 0.3442 - val_loss: 2.3310 - val_acc: 0.5373
-Epoch 2/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 2.3351 - acc: 0.5072 - val_loss: 2.3068 - val_acc: 0.5196
-Epoch 3/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 2.1780 - acc: 0.5647 - val_loss: 2.0649 - val_acc: 0.6058
-Epoch 4/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 2.0855 - acc: 0.5888 - val_loss: 1.9625 - val_acc: 0.6286
-Epoch 5/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 1.9918 - acc: 0.6216 - val_loss: 1.8678 - val_acc: 0.6625
-Epoch 6/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 1.8907 - acc: 0.6603 - val_loss: 1.7870 - val_acc: 0.6889
-[==============================]
-Epoch 57/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3629 - acc: 0.9833 - val_loss: 0.9057 - val_acc: 0.8531
-Epoch 58/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3508 - acc: 0.9860 - val_loss: 0.9416 - val_acc: 0.8539
-Epoch 59/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3479 - acc: 0.9846 - val_loss: 0.9168 - val_acc: 0.8542
-Epoch 60/60
-21051/21051 [==============================] - 27s 1ms/sample - loss: 0.3406 - acc: 0.9852 - val_loss: 0.8618 - val_acc: 0.8549
-Runtime: 114135.438832549
-```
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m5_acc.png" alt="">
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/intel_image/m5_loss.png" alt="">
-
-```python
-3000/3000 [==============================] - 2s 515us/sample - loss: 0.8744 - acc: 0.8497
-```
-![image-center]({{ site.url }}{{ site.baseurl }}/images/intel_image/cm_5.png){: .align-center}
+As next step, one can change deep learning structure, making model deeper or shallower, including average or sum pooling approaches. In addition, one can also try out different optimizer such as Stochastic Gradient Descent or Adagrad with optimizing learning rate and epochs.

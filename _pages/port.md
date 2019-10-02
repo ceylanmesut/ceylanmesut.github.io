@@ -4,7 +4,8 @@ layout: collection
 permalink: /portfolio/
 collection: portfolio
 entries_layout: grid
-classes:wide
+classes: wide
+
 ---
 {% capture written_label %}'None'{% endcapture %}
 

@@ -4,7 +4,8 @@ date: 2019-09-10
 tags: [Machine_Learning]
 header:
  image: "/images/credit_cards.jpg"
- teaser: "/images/credit_cards.jpg"
+ teaser: "/images/teaser_images/cards.jpg"
+ 
 excerpt: "Credit card fraud detection machine learning project."
 
 toc: true

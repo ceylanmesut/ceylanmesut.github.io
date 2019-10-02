@@ -4,7 +4,7 @@ date: 2018-01-01
 tags: [Data_Science]
 header:
  image: "/images/house.png"
- teaser: "/images/house.png"
+ teaser: "/images/teaser_images/house.jpg"
 excerpt: "Data Science and Web Scraping Project on Zurich Real Estate Market."
 
 toc: true

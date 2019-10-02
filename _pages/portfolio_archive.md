@@ -3,7 +3,10 @@ layout: archive
 title: "Portfolio"
 permalink: /portfolio/
 author_profile: true
+entries_layout: grid
+class: wide
 ---
+
 {% include base_path %}
 
 <div class="grid__wrapper">
@@ -11,3 +14,4 @@ author_profile: true
     {% include archive-single.html type="grid" %}
   {% endfor %}
 </div>
+

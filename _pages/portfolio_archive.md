@@ -1,10 +1,10 @@
 ---
 layout: archive
-title: "Portfolio"
 permalink: /portfolio/
+title: "Portfolio"
 author_profile: true
 entries_layout: grid
-class: wide
+classes: wide
 ---
 
 {% include base_path %}

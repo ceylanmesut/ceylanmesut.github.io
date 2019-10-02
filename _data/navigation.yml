@@ -5,6 +5,4 @@ main:
     url: /about/
   - title: "Machine Learning"
     url: /machine-learning/
-  - title: "Portfolio"
-    url: /portfolio/
 ---

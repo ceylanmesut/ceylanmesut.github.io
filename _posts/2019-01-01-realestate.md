@@ -1,7 +1,7 @@
 ---
 title: "Zurich Real Estate Market"
 date: 2018-01-01
-tags: [Data Science]
+tags: [Data_Science]
 header:
  image: "/images/house.png"
 excerpt: "Data Science and Web Scraping Project on Zurich Real Estate Market."

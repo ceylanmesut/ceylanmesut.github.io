@@ -1,7 +1,6 @@
 ---
 title:"Splash Page"
 layout: splash
-permalink: /
 author_profile: true
 header:
   overlay_color: "#000"

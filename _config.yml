@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 
 # Site Settings
 locale                   : "en-US"
-title                    : "My Portfolio Page"
+title                    : "Without Data You're Just Another Person with Opinion"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Mesut Ceylan"
@@ -278,7 +278,7 @@ compress_html:
   clippings: all
   ignore:
     envs: development
-    
+
 collections:
   portfolio:
     output: true
@@ -297,7 +297,7 @@ defaults:
       comments: true
       share: true
       related: true
- 
+
   #_pages
   - scope:
       path: ""
@@ -314,5 +314,3 @@ defaults:
       author_profile: true
       share: true
       related: true
-
-              

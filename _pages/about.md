@@ -5,13 +5,12 @@ header:
   image: "/images/gl.jpg"
 ---
 
-Hi there! I'm **Mesut Ceylan** and I'm a **machine learning engineer.**
+Hi there! I'm Mesut Ceylan and I'm a master student in Zürich/Switzerland, pursuing M.Sc. in Data Science within University of Zürich.
 
-Welcome to **my data science and machine learning portfolio blog.** 
+I'm dedicated and adaptive young professional with discipline, strong analytic and programming skills and multi disciplinary work experience.
 
-Occasionally, I am sharing machine learning projects that I found interesting and worked on.
+Fundamentally, I'm coding on Python for my machine learning and deep learning projects and utilizing core libraries such as: Tensorflow, Keras, Scikit-Learn, Pandas, Numpy, Matplotlib, Seaborn, NetworkX etc.
 
-Therefore, this website includes **projects on machine learning** along with **brief theory and practical sections** with project posts.
+I also benefit from unique visualization software Tableau for data visualization, NoSQL for database management and data extraction and R for statistical interpretation and calculations.
 
-I would be very glad to **further discuss your comments and suggestions** on projects and methodologies. 
-Please contact with me **via e-mail** for your inquiries.
+Deliberately, I'm looking forward to apply my skills of machine learning and deep learning on applications to contribute to business process of companies and research projects of leading universities.

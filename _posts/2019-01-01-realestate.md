@@ -1,7 +1,6 @@
 ---
 title: "Zurich Real Estate Market"
 date: 2018-01-01
-tags: [Data_Science]
 header:
  image: "/images/house.png"
  teaser: "/images/house.png"

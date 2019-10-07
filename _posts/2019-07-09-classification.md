@@ -1,7 +1,6 @@
 ---
 title: "Credit Card Fraud Detection"
 date: 2019-09-10
-tags: [Machine_Learning]
 header:
  image: "/images/credit_cards.jpg"
  teaser: "/images/credit_cards.jpg"

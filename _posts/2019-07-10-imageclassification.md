@@ -1,7 +1,6 @@
 ---
 title: "Intel Image Data Classification Project"
 date: 2019-09-13
-tags: [Computer_Vision, Machine_Learning, Convolutional_Neural_Network]
 header:
  image: "/images/house.png"
  teaser: "/images/house.png"

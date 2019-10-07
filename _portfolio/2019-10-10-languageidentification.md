@@ -2,7 +2,7 @@
 title: "Language Identification"
 date: 2019-10-10
 header:
- image: "/images/nlp.png"
+ image: "/images/lang_iden/nlp2.png"
  teaser: "/images/teaser_images/twitter.jpg"
 
 excerpt: "Language Identification from Tweets"

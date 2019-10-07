@@ -3,8 +3,8 @@ title:"Splash Page"
 layout: splash
 permalink: /
 header:
-  overlay_color: "#5e616c"
-  overlay_image: /images/gl.jpg
+ overlay_color: "#5e616c"
+ overlay_image: /images/gl.jpg
   excerpt: >
     A flexible two-column Jekyll theme. Perfect for building personal sites, blogs, and portfolios.<br />
 ---

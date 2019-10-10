@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Data=Understanding"
+title                    : "Data is the Understanding!"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Mesut Ceylan"
@@ -109,7 +109,7 @@ analytics:
 author:
   name             : "Mesut Ceylan"
   avatar           : "/images/profil_photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Machine Learning Engineer"
+  bio              : "Aspiring Machine Learning Engineer"
   location         : "Zurich | Switzerland"
   email            :
   linkedin: https://www.linkedin.com/in/mesutceylan/

@@ -239,4 +239,4 @@ curdoc().title = "Interactive Dashboard for Noise and Filter Operations"
 
 ```
 
-
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/im_pro_dash/dh.png" alt="">

@@ -19,6 +19,10 @@ toc_sticky: true
 * Some part of the codes in this exercise is pre-provided my part defining function and creating dashboard out of it.
 
 
+** Below you can find short demonstration of the dashboard and its functionality.**
+
+<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/im_pro_dash/aa.gif" alt="">
+
 ```python
 import numpy as np
 from numpy.random import rand
@@ -239,4 +243,4 @@ curdoc().title = "Interactive Dashboard for Noise and Filter Operations"
 
 ```
 
-<img src="{{ https://ceylanmesut.github.io/classification/.url }}{{ https://ceylanmesut.github.io/classification/.baseurl }}/images/im_pro_dash/dh.png" alt="">
+

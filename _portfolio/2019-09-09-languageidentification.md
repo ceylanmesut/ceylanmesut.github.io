@@ -1,3 +1,20 @@
+---
+title: "Tweet Language Identification"
+date: 2019-09-09
+header:
+ image: "/images/lang_iden/nlp2.png"
+ teaser: "/images/teaser_images/twitter.jpg"
+
+excerpt: "Language Identification of Tweets"
+
+toc: true
+toc_label: " On This Page"
+toc_icon: "file-alt"
+toc_sticky: true
+---
+
+
+
 
 ## Introduction
 This toy example dataset and project is about utilizing Natural Language Processing in order to make **prediction of language of given tweet.**

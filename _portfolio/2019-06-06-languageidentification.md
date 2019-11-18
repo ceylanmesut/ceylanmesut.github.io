@@ -1,6 +1,6 @@
 ---
 title: "Tweet Language Identification"
-date: 2019-09-09
+date: 2019-06-06
 header:
  image: "/images/lang_iden/nlp2.png"
  teaser: "/images/teaser_images/twitter.jpg"
